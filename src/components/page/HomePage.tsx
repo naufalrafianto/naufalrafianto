@@ -111,13 +111,11 @@ export const HomePage = () => {
           href={nowPlaying?.songUrl ? nowPlaying?.songUrl : 'https://open.spotify.com/user/g82swyx3uiwbvl9qzf3k13jo1'}
           className="relative flex h-full w-full items-center justify-center sm:row-span-2"
         >
-          <h1>Tes</h1>
           <NowPlayingComponent data={nowPlaying} />
         </BentoGridComponent>
 
         {/* ==== GITHUB BOX */}
         <BentoGridComponent href="https://github.com/naufalrafianto" className="sm:col-span-4">
-          {' '}
           <div className="absolute h-full w-full">
             <Image
               width={500}
