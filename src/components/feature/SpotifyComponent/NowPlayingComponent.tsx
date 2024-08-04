@@ -1,5 +1,4 @@
 'use client';
-
 import * as React from 'react';
 import styles from './SpotifyBar.module.css';
 import Lottie from 'lottie-react';

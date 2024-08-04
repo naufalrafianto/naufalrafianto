@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@/lib';
 import Link from 'next/link';
 import * as React from 'react';

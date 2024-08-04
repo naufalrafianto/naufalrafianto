@@ -68,7 +68,6 @@ export default function RootLayout({
         <NavMenu />
         <Layout>
           {children}
-
           <Footer />
         </Layout>
       </body>
