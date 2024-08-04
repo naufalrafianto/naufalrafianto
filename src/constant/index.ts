@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 
 const icons = [
   {
-    href: 'https://github.com/mnauff',
+    href: 'https://github.com/naufalrafianto',
     icon: GitHubLogoIcon,
     ariaLabel: 'GitHub',
     title: 'GitHub',
