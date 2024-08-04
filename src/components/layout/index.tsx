@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="container mx-auto">
+    <main className="container mx-auto">
       <NextTopLoader
         color="#fff"
         initialPosition={0.08}
@@ -24,6 +24,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         <div>{children}</div>
       </div>
       <ScrollbarProgress />
-    </div>
+    </main>
   );
 };
