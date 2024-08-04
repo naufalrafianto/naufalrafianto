@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Layout } from '@/components/layout';
 import NavMenu from '@/components/layout/Navbar/NavMenu';
+import { Footer } from '@/components/layout/Footer';
 
 const font = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
@@ -26,6 +27,34 @@ export const metadata: Metadata = {
       'Personal website and blog by Muhammad Naufal Rafianto. Showcase of my projects, and some of my thoughts about technology.',
   },
   metadataBase: new URL('https://naufalrafianto.dev'),
+  icons: {
+    icon: [
+      {
+        url: '/favicon/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon/favicon.ico',
+        sizes: 'any',
+      },
+    ],
+    apple: {
+      url: '/favicon/apple-touch-icon.png',
+      sizes: '180x180',
+      type: 'image/png',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -36,9 +65,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
+        <NavMenu />
         <Layout>
-          <NavMenu />
           {children}
+
+          <Footer />
         </Layout>
       </body>
     </html>

@@ -1,11 +1,23 @@
 'use client';
-import Image from 'next/image';
-import { IconGroup, NameAnimationHome } from '../feature';
 import { FadeUp, Reveal } from '../animation';
+import { MagicButton } from '../common';
+import { IconGroup, NameAnimationHome } from '../feature';
+import { BentoGrid, BentoGridComponent } from '../layout/BentoGrid';
+
 import { icons } from '@/constant';
+
+import Image from 'next/image';
+import { ArrowTopRightIcon } from '@radix-ui/react-icons';
+import { BackgroundGradientAnimation } from '../layout/GradientBackground';
+import { cn } from '@/lib';
+import { useNowPlaying } from '@/lib/spotify';
+import { SpotifyNowPlaying } from '../feature/SpotifyComponent';
+import { TopTracksComponent } from '../feature/TopTracksComponent';
 
 export const HomePage = () => {
   const age = new Date().getFullYear() - new Date('2003-12-11').getFullYear();
+
+  const { nowPlaying } = useNowPlaying();
 
   return (
     <section className="flex max-w-7xl flex-col items-center justify-center gap-y-4 pt-4">
@@ -26,6 +38,108 @@ export const HomePage = () => {
         {age} years old based on Surabaya, Indonesia and working as an freelance{' '}
         <span className="border-b font-medium text-slate-200">Full Stack Software Developer.</span>
       </Reveal>
+      <BentoGrid>
+        {/* ==== PORTFOLIO BOX */}
+        <BentoGridComponent href="/portfolio" className="sm:col-span-4">
+          <BackgroundGradientAnimation>
+            <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center px-4 text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl"></div>
+          </BackgroundGradientAnimation>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-4 text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl">
+            <div
+              className={`bg-gradient-to-b from-white/80 to-white/20 bg-clip-text text-lg font-bold text-transparent drop-shadow-2xl lg:text-2xl`}
+            >
+              Tech enthusiast with a passion for development.
+            </div>
+            <MagicButton href="/blog" title="My Blog" icon={<ArrowTopRightIcon />} position="right" />
+          </div>
+        </BentoGridComponent>
+
+        {/* ==== ABOUT BOX */}
+        <BentoGridComponent href="/about">
+          <div className="absolute h-full w-full">
+            <Image
+              width={500}
+              height={500}
+              src={'/svg/grid.svg'}
+              alt={'About Image'}
+              className={cn('absolute right-0 w-60 object-cover object-center md:w-96')}
+            />
+          </div>
+          <div className="absolute bottom-0 right-0 z-50 w-full opacity-80">
+            <Image
+              width={500}
+              height={500}
+              src={'/svg/b4.svg'}
+              alt={''}
+              className="z-50 h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="relative flex min-h-40 flex-col justify-center p-3 transition duration-200 group-hover/bento:translate-x-2 md:h-full lg:p-4">
+            <div className="z-10 text-sm font-extralight text-[#C1C2D3] md:max-w-32 md:text-xs">About page</div>
+            <div className={`z-10 max-w-96 text-lg font-bold lg:text-xl`}>Get to know me</div>
+          </div>
+        </BentoGridComponent>
+
+        {/* ==== PORTFOLIO BOX */}
+        <BentoGridComponent href="/portfolio" className="sm:row-start-3">
+          <div className="absolute h-full w-full">
+            <Image
+              width={500}
+              height={500}
+              src={'/svg/b1.svg'}
+              alt={'Portfolio Image'}
+              className={cn('absolute right-0 w-full object-cover object-center md:w-96')}
+            />
+          </div>
+          <div className="relative flex min-h-40 flex-col justify-center p-3 transition duration-200 group-hover/bento:translate-x-2 md:h-full lg:p-4">
+            <div className="z-10 text-sm font-extralight text-[#C1C2D3] md:max-w-32 md:text-xs">
+              See all my portfolios
+            </div>
+            <div className={`z-10 max-w-96 text-lg font-bold lg:text-xl`}>Portfolio page</div>
+          </div>
+        </BentoGridComponent>
+
+        {/* ==== TOP TRACK BOX */}
+        <BentoGridComponent href="#" className="sm:col-span-2 sm:row-span-2">
+          <TopTracksComponent />
+        </BentoGridComponent>
+
+        {/* ==== NOW PLAYING BOX */}
+        <BentoGridComponent
+          href={nowPlaying?.songUrl ? nowPlaying?.songUrl : 'https://open.spotify.com/user/g82swyx3uiwbvl9qzf3k13jo1'}
+          className="relative flex h-full w-full items-center justify-center sm:row-span-2"
+        >
+          <SpotifyNowPlaying data={nowPlaying} />
+        </BentoGridComponent>
+
+        {/* ==== GITHUB BOX */}
+        <BentoGridComponent href="https://github.com/naufalrafianto" className="sm:col-span-4">
+          {' '}
+          <div className="absolute h-full w-full">
+            <Image
+              width={500}
+              height={500}
+              src={'/svg/grid.svg'}
+              alt={'About Image'}
+              className={cn('absolute right-0 w-60 object-cover object-center md:w-96')}
+            />
+          </div>
+          <div className="justify-betwen absolute bottom-0 right-0 z-10 flex h-full w-full opacity-50">
+            <Image width={500} height={500} src={'/svg/b5.svg'} alt={''} className="h-full w-1/2 object-cover" />
+            <Image
+              width={500}
+              height={500}
+              src={'/image/algorithms.png'}
+              alt={''}
+              className="h-full w-1/2 object-cover"
+            />
+          </div>
+          <div className="relative flex min-h-40 flex-col justify-center p-3 transition duration-200 group-hover/bento:translate-x-2 md:h-full lg:p-4">
+            <div className="z-10 text-sm font-extralight text-[#C1C2D3] md:max-w-32 md:text-xs">The Inside Scoop</div>
+            <div className={`z-10 max-w-96 text-lg font-bold lg:text-xl`}>Checkout My Github Profile</div>
+          </div>
+        </BentoGridComponent>
+      </BentoGrid>
     </section>
   );
 };
