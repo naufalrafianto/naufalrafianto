@@ -11,8 +11,10 @@ import { ArrowTopRightIcon } from '@radix-ui/react-icons';
 import { BackgroundGradientAnimation } from '../layout/GradientBackground';
 import { cn } from '@/lib';
 import { useNowPlaying } from '@/lib/spotify';
-import { SpotifyNowPlaying } from '../feature/SpotifyComponent';
-import { TopTracksComponent } from '../feature/TopTracksComponent';
+import { TopTracksComponent } from '../feature/SpotifyComponent/TopTracksComponent';
+import dynamic from 'next/dynamic';
+
+const NowPlayingComponent = dynamic(() => import('../feature/SpotifyComponent/NowPlayingComponent'), { ssr: false });
 
 export const HomePage = () => {
   const age = new Date().getFullYear() - new Date('2003-12-11').getFullYear();
@@ -109,7 +111,7 @@ export const HomePage = () => {
           href={nowPlaying?.songUrl ? nowPlaying?.songUrl : 'https://open.spotify.com/user/g82swyx3uiwbvl9qzf3k13jo1'}
           className="relative flex h-full w-full items-center justify-center sm:row-span-2"
         >
-          <SpotifyNowPlaying data={nowPlaying} />
+          <NowPlayingComponent data={nowPlaying} />
         </BentoGridComponent>
 
         {/* ==== GITHUB BOX */}

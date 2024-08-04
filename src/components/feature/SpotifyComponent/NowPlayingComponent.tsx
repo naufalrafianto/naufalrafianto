@@ -13,7 +13,7 @@ type SpotifyProps = {
   data: CurrentlyPlayingData | undefined;
 };
 
-export const SpotifyNowPlaying: React.FC<SpotifyProps> = ({ data }) => {
+const NowPlayingComponent: React.FC<SpotifyProps> = ({ data }) => {
   if (!data) {
     return <FaSpinner className="h-10 w-10 animate-spin" />;
   }
@@ -68,3 +68,5 @@ export const SpotifyNowPlaying: React.FC<SpotifyProps> = ({ data }) => {
     </div>
   );
 };
+
+export default NowPlayingComponent;
