@@ -9,7 +9,7 @@ import { cn } from '@/lib';
 
 interface NavMenuBtnProps {
   active: boolean;
-  toggleHamburger: (status: boolean) => void;
+  toggleHamburger: (_newStatus: boolean) => void;
 }
 
 export default function NavMenuBtn({ active, toggleHamburger }: NavMenuBtnProps) {

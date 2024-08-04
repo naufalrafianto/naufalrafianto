@@ -61,7 +61,7 @@ export const TopTracksComponent: React.FC = () => {
 
 interface TrackItemProps {
   track: TrackData;
-  handlePlay: (trackUrl: string) => void;
+  handlePlay: (_trackUrl: string) => void;
   currentTrack: string | null;
   previewPlayed: boolean;
 }
