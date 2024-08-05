@@ -65,8 +65,6 @@ export default async function PortfolioPost({
     notFound();
   }
 
-  console.log('Heading: ', post.headings);
-
   return (
     <section id="portfolio-post" className="relative min-h-screen px-8 pt-10 sm:px-20">
       <script
