@@ -1,7 +1,6 @@
 import React from 'react';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
-import { cn } from '@/lib';
-
+import { cn } from '@/lib/cn';
 
 interface NavMenuLineProps {
   title: string;

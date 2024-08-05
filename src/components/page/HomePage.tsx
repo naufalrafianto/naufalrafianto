@@ -1,7 +1,4 @@
 'use client';
-import { FadeUp, Reveal } from '../animation';
-import { MagicButton } from '../common';
-import { IconGroup, NameAnimationHome } from '../feature';
 import { BentoGrid, BentoGridComponent } from '../layout/BentoGrid';
 
 import { icons } from '@/constant';
@@ -9,10 +6,15 @@ import { icons } from '@/constant';
 import Image from 'next/image';
 import { ArrowTopRightIcon } from '@radix-ui/react-icons';
 import { BackgroundGradientAnimation } from '../layout/GradientBackground';
-import { cn } from '@/lib';
+import { cn } from '@/lib/cn';
 import { useNowPlaying } from '@/lib/spotify';
 import { TopTracksComponent } from '../feature/SpotifyComponent/TopTracksComponent';
 import dynamic from 'next/dynamic';
+import { FadeUp } from '../animation/FadeUp';
+import { IconGroup } from '../feature/IconGroup';
+import { NameAnimationHome } from '../feature/NameAnimationHome';
+import { Reveal } from '../animation/Reveal';
+import { MagicButton } from '../common/Button';
 
 const NowPlayingComponent = dynamic(() => import('../feature/SpotifyComponent/NowPlayingComponent'), { ssr: false });
 
@@ -22,7 +24,7 @@ export const HomePage = () => {
   const { nowPlaying } = useNowPlaying();
 
   return (
-    <section className="flex max-w-7xl flex-col items-center justify-center gap-y-4 pt-4">
+    <section className="flex min-h-screen max-w-7xl flex-col items-center justify-center gap-y-4 py-4">
       <FadeUp>
         <Image
           src={'/image/profile-pict.png'}
@@ -67,7 +69,7 @@ export const HomePage = () => {
               className={cn('absolute right-0 w-60 object-cover object-center md:w-96')}
             />
           </div>
-          <div className="absolute bottom-0 right-0 z-50 w-full opacity-80">
+          <div className="absolute bottom-0 right-0 z-10 w-full opacity-80">
             <Image
               width={500}
               height={500}
@@ -90,7 +92,7 @@ export const HomePage = () => {
               height={500}
               src={'/svg/b1.svg'}
               alt={'Portfolio Image'}
-              className={cn('absolute right-0 w-full object-cover object-center md:w-96')}
+              className={cn('absolute right-0 h-full w-full object-cover object-center md:w-96')}
             />
           </div>
           <div className="relative flex min-h-40 flex-col justify-center p-3 transition duration-200 group-hover/bento:translate-x-2 md:h-full lg:p-4">

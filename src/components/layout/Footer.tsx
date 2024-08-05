@@ -2,13 +2,13 @@
 import { FaLocationArrow } from 'react-icons/fa6';
 
 import Image from 'next/image';
-import { MagicButton } from '../common';
-import { IconGroup } from '../feature';
+import { MagicButton } from '../common/Button';
+import { IconGroup } from '../feature/IconGroup';
 import { icons } from '@/constant';
 
 export const Footer = () => {
   return (
-    <footer className="relative w-full overflow-y-hidden px-10 pb-10 pt-20 sm:px-40" id="contact">
+    <footer className="relative w-full overflow-y-hidden px-10 pb-10 pt-80 sm:px-40 sm:pt-20" id="contact">
       <div className="absolute bottom-0 left-0 h-80 w-full">
         <Image
           fill={true}

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { ScrollbarProgress } from '@/components/feature';
+import { ScrollbarProgress } from '@/components/feature/ScrollbarProgress';
 import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from 'react-hot-toast';
 

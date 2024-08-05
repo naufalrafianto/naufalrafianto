@@ -9,7 +9,7 @@ const font = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'naufalrafianto.dev',
+    default: 'Muhammad Naufal Rafianto',
     template: '%s | naufalrafianto.dev',
   },
   alternates: {

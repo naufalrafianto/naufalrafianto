@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib';
+import { cn } from '@/lib/cn';
 import gsap from 'gsap';
 import { useRef, useState } from 'react';
 import MagneticEffect from './MagneticEffect';
@@ -8,7 +8,7 @@ import NavMenuBtn from './NavBtn';
 import NavMenuLine from './NavLine';
 import NavMenuLink from './NavMenuLink';
 import { useIsomorphicLayoutEffect } from 'framer-motion';
-import { IconGroup } from '@/components/feature';
+import { IconGroup } from '@/components/feature/IconGroup';
 import { icons } from '@/constant';
 
 export default function NavMenu() {

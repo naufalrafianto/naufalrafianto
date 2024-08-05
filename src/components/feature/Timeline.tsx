@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTimelineItems } from '@/hooks/useTimelineItems';
-import { FadeUp } from '../animation';
+import { FadeUp } from '../animation/FadeUp';
 import { CustomLink } from '../common/CustomLink';
-import { formatTimeDifference } from '@/lib';
+import { formatTimeDifference } from '@/lib/date';
 const Timeline: React.FC = () => {
   const timelineItems = useTimelineItems();
 
@@ -25,7 +25,7 @@ const Timeline: React.FC = () => {
 
           return (
             <li key={index} className="relative mb-10 pl-6">
-              <div className="absolute left-[-20px] flex h-10 w-10 items-center justify-center rounded-full border border-gray-900 bg-gray-700">
+              <div className="absolute left-[-20px] flex h-14 w-14 items-center justify-center rounded-full border border-gray-900 bg-gray-700">
                 {item.icon}
               </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCombinedRefs } from '@/lib';
+import { useCombinedRefs } from '@/lib/ref';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import React, { forwardRef, useEffect, useRef } from 'react';
 

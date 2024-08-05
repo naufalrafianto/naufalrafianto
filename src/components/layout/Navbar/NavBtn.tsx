@@ -5,7 +5,7 @@ import useIsomorphicLayoutEffect from '@/hooks/UseIsomorphicLayoutEffect';
 import gsap from 'gsap';
 import { useRef } from 'react';
 import MagneticEffect from './MagneticEffect';
-import { cn } from '@/lib';
+import { cn } from '@/lib/cn';
 
 interface NavMenuBtnProps {
   active: boolean;

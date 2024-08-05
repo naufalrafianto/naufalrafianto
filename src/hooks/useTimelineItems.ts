@@ -1,5 +1,5 @@
 import { timelineItems } from '@/constant/timeline';
-import { formatTimeDifference } from '@/lib';
+import { formatTimeDifference } from '@/lib/date';
 
 export function useTimelineItems() {
   const formatTimelineItems = timelineItems.map((item) => {

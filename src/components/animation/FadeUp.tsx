@@ -1,7 +1,7 @@
 'use client';
 import React, { forwardRef, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import { useCombinedRefs } from '@/lib';
+import { useCombinedRefs } from '@/lib/ref';
 
 type FadeUpProps = {
   children?: React.ReactNode;

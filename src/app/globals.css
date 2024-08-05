@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    @apply scrollbar-thin scrollbar-thumb-white scrollbar-track-slate-950 overflow-y-scroll;
+    @apply overflow-y-scroll scrollbar-thin scrollbar-track-slate-950 scrollbar-thumb-white;
   }
 }
 
@@ -43,4 +43,99 @@
     transform: scaleX(1);
     transform-origin: bottom left;
   }
+}
+
+/* ===== MDX ===== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+blockquote {
+  border-style: solid;
+  border-width: 0 0 0 0.25rem;
+  border-image: linear-gradient(to top, #00ff94, #00e0f3, #00c4fd) 1;
+  background-color: rgba(94, 234, 212, 0.25); /* #5eead4 with 50% opacity */
+  padding: 1rem;
+  margin: 1em 0;
+  position: relative;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold md:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl font-bold md:text-4xl;
+  }
+
+  h3 {
+    @apply text-xl font-bold md:text-3xl;
+  }
+
+  h4 {
+    @apply text-lg font-bold md:text-2xl;
+  }
+}
+
+.prose {
+  max-width: 50rem;
+}
+
+.prose a {
+  text-decoration: none;
+}
+
+.prose > ol > li > :last-child,
+.prose > ul > li > :last-child {
+  margin-bottom: 0;
+}
+.prose > ol > li > :first-child,
+.prose > ul > li > :first-child {
+  margin-top: 0;
+}
+
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: '';
+}
+
+.prose blockquote {
+  border-style: solid;
+  border-width: 0 0 0 0.25rem;
+  border-color: #3b82f6;
+}
+
+.prose hr {
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #3b82f6;
+}
+
+.mdx.prose :where(h1, h2, h3, h4) {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  scroll-margin-top: 100px;
+  position: relative;
+  display: block;
+  margin-right: 0.5rem;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.mdx.prose :where(h1, h2, h3, h4) > a {
+  border-bottom: none;
+  font-weight: 900; /* bold */
+}
+
+/* Custom Heading Style for Projects */
+.mdx.prose.projects blockquote {
+  font-style: normal;
+}
+.mdx.prose.projects blockquote:first-of-type h2 {
+  margin-top: 1rem;
+}
+.mdx.prose.projects blockquote.with-icons h2 {
+  margin-bottom: 0;
 }

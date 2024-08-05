@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import React, { useRef, useState } from 'react';
 import { useTopTracks } from '@/lib/spotify';
@@ -10,7 +11,8 @@ export const TopTracksComponent: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
   const [previewPlayed, setPreviewPlayed] = useState<boolean>(false);
 
-  const handlePlay = (trackUrl: string) => {
+  const handlePlay = (e: React.MouseEvent<HTMLButtonElement>, trackUrl: string) => {
+    e.preventDefault();
     if (audioRef.current) {
       if (audioRef.current.src === trackUrl && !audioRef.current.paused) {
         audioRef.current.pause();
@@ -27,7 +29,7 @@ export const TopTracksComponent: React.FC = () => {
   const skeletonItems = Array.from({ length: 5 }, (_, i) => (
     <li key={i} className="flex animate-pulse items-center justify-between rounded-lg bg-gray-700 p-2">
       <div className="flex items-center">
-        <div className="mr-4 h-10 w-10 rounded-md bg-gray-600" />
+        <div className="mr-4 h-14 w-14 rounded-md bg-gray-600" />
         <div className="space-y-2">
           <div className="h-4 w-24 rounded bg-gray-600"></div>
           <div className="h-4 w-16 rounded bg-gray-600"></div>
@@ -61,7 +63,7 @@ export const TopTracksComponent: React.FC = () => {
 
 interface TrackItemProps {
   track: TrackData;
-  handlePlay: (_trackUrl: string) => void;
+  handlePlay: (e: React.MouseEvent<HTMLButtonElement>, trackUrl: string) => void;
   currentTrack: string | null;
   previewPlayed: boolean;
 }
@@ -80,7 +82,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, handlePlay, currentTrack, 
       </div>
       <div>
         <button
-          onClick={() => handlePlay(track.preview)}
+          onClick={(e) => handlePlay(e, track.preview)}
           className="rounded-full bg-white px-4 py-1 text-sm font-bold text-black hover:bg-[#1DB954]"
         >
           {isPlaying ? 'Stop' : 'Play'}
