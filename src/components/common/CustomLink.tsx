@@ -26,7 +26,9 @@ export interface LinkProps extends React.ComponentPropsWithRef<'a'>, VariantProp
 export const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(({ size, children, className, ...rest }, ref) => {
   return (
     <a ref={ref} {...rest} className={cn(linkVariant({ size }), className)}>
-      <span className="bg-gradient-to-tr from-teal-300 to-teal-500 bg-clip-text text-transparent">{children}</span>
+      <span className="whitespace-nowrap bg-gradient-to-tr from-teal-300 to-teal-500 bg-clip-text text-transparent">
+        {children}
+      </span>
     </a>
   );
 });
