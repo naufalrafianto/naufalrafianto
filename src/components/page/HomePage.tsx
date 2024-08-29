@@ -24,14 +24,14 @@ export const HomePage = () => {
   const { nowPlaying } = useNowPlaying();
 
   return (
-    <section className="flex min-h-screen max-w-7xl flex-col items-center justify-center gap-y-4 py-4">
-      <FadeUp>
+    <section className="z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center gap-y-4 py-4">
+      <FadeUp className="z-10">
         <Image
           src={'/image/profile-pict.png'}
           width={160}
           height={160}
           alt="profilepic"
-          className="mt-2 rounded-full border-2 border-slate-400"
+          className="z-10 mt-2 rounded-full border-2 border-slate-400"
           priority
         />
       </FadeUp>

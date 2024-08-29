@@ -2,7 +2,6 @@
 import { cn } from '@/lib/cn';
 import Link from 'next/link';
 import * as React from 'react';
-import { FadeUp } from '../animation/FadeUp';
 
 export const BentoGrid = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -22,7 +21,7 @@ export const BentoGridComponent = ({
   className?: string;
 }) => {
   return (
-    <FadeUp
+    <div
       className={cn(
         'group/bento relative flex min-h-[10rem] flex-col items-start justify-between overflow-hidden rounded-md border border-white/[0.1] transition duration-200 hover:shadow-xl',
         className
@@ -31,6 +30,6 @@ export const BentoGridComponent = ({
       <Link href={href} className="h-full w-full">
         {children}
       </Link>
-    </FadeUp>
+    </div>
   );
 };

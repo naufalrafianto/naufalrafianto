@@ -1,100 +1,50 @@
 'use client';
-
-import { useCombinedRefs } from '@/lib/ref';
+import * as React from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import React, { forwardRef, useEffect, useRef } from 'react';
 
 interface RevealProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
+  width?: 'fit-content' | '100%';
   className?: string;
-  delay?: number;
-  width?: string;
-  animationVariants?: {
-    hidden?: object;
-    visible?: object;
-  };
-  slideVariants?: {
-    hidden?: object;
-    visible?: object;
-  };
-  animationTransition?: {
-    duration?: number;
-    delay?: number;
-    ease?: string;
-  };
 }
 
-const defaultAnimationVariants = {
-  hidden: { opacity: 0, y: 75 },
-  visible: { opacity: 1, y: 0 },
+export const Reveal = ({ children, width = 'fit-content', className }: RevealProps) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const mainControl = useAnimation();
+  const slideControl = useAnimation();
+
+  React.useEffect(() => {
+    if (isInView) {
+      mainControl.start('visible');
+      slideControl.start('visible');
+    }
+  }, [isInView]);
+
+  return (
+    <div style={{ position: 'relative', width, overflow: 'hidden' }} className={className}>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 75 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        initial="hidden"
+        animate={mainControl}
+        transition={{ duration: 1, delay: 0.25 }}
+      >
+        {children}
+      </motion.div>
+      <motion.div
+        ref={ref}
+        style={{ position: 'absolute', top: 4, bottom: 4, right: 0, left: 0, background: '#5eead4', zIndex: 20 }}
+        variants={{
+          hidden: { left: 0 },
+          visible: { left: '100%' },
+        }}
+        initial="hidden"
+        animate={slideControl}
+        transition={{ duration: 1, ease: 'easeIn' }}
+      />
+    </div>
+  );
 };
-
-const defaultSlideVariants = {
-  hidden: { left: 0 },
-  visible: { left: '100%' },
-};
-
-const defaultAnimationTransition = {
-  duration: 0.5,
-  delay: 0.25,
-  ease: 'easeIn',
-};
-
-export const Reveal = forwardRef<HTMLDivElement, RevealProps>(
-  (
-    {
-      children,
-      className = '',
-      delay = 0,
-      width = 'fit-content',
-      animationVariants = defaultAnimationVariants,
-      slideVariants = defaultSlideVariants,
-      animationTransition = defaultAnimationTransition,
-    },
-    ref
-  ) => {
-    const innerRef = useRef<HTMLDivElement>(null);
-    const combinedRef = useCombinedRefs(innerRef, ref);
-    const isInView = useInView(innerRef, { once: true });
-
-    const mainControls = useAnimation();
-    const slideControls = useAnimation();
-
-    useEffect(() => {
-      if (isInView) {
-        mainControls.start('visible');
-        slideControls.start('visible');
-      }
-    }, [isInView, mainControls, slideControls]);
-
-    return (
-      <span ref={combinedRef} style={{ position: 'relative', width: width }} className={className}>
-        <motion.div
-          variants={animationVariants}
-          transition={{ ...animationTransition, delay: delay + (animationTransition.delay ?? 0) }}
-          initial="hidden"
-          animate={mainControls}
-        >
-          {children}
-        </motion.div>
-        <motion.div
-          variants={slideVariants}
-          initial="hidden"
-          animate={slideControls}
-          transition={{ duration: animationTransition.duration, ease: animationTransition.ease, delay: delay }}
-          style={{
-            position: 'absolute',
-            top: 4,
-            bottom: 4,
-            left: 0,
-            right: 0,
-            zIndex: 20,
-          }}
-          className="bg-white"
-        />
-      </span>
-    );
-  }
-);
-
-Reveal.displayName = 'Reveal';

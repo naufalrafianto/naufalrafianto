@@ -14,7 +14,11 @@ type SpotifyProps = {
 
 const NowPlayingComponent: React.FC<SpotifyProps> = ({ data }) => {
   if (!data) {
-    return <FaSpinner className="h-14 w-14 animate-spin" />;
+    return (
+      <div className="relative flex h-full w-full items-center justify-center">
+        <FaSpinner className="h-14 w-14 animate-spin" />
+      </div>
+    );
   }
 
   if (data.isPlaying) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTimelineItems } from '@/hooks/useTimelineItems';
-import { FadeUp } from '../animation/FadeUp';
+import { Reveal } from '../animation/Reveal';
 import { CustomLink } from '../common/CustomLink';
 import { formatTimeDifference } from '@/lib/date';
 const Timeline: React.FC = () => {
@@ -30,27 +30,27 @@ const Timeline: React.FC = () => {
               </div>
 
               <div className="ml-6">
-                <FadeUp>
+                <Reveal>
                   <h3 className="text-lg font-bold text-white">{item.title}</h3>
-                </FadeUp>
-                <FadeUp>
+                </Reveal>
+                <Reveal>
                   <CustomLink href={item.website} target="_blank">
                     {item.company}
                   </CustomLink>
                   <span className="mb-4 text-base font-normal text-gray-400">{` - ${item.type}`}</span>
-                </FadeUp>
-                <FadeUp>
+                </Reveal>
+                <Reveal>
                   <time className="mb-1 text-sm font-normal leading-none text-gray-500">
                     {`${startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - ${formattedEndDate}`}
                     {` · ${dateDifference}`}
                   </time>
-                </FadeUp>
-                <FadeUp>
+                </Reveal>
+                <Reveal>
                   <p className="mb-4 text-base font-normal text-gray-400">{item.location}</p>
-                </FadeUp>
-                <FadeUp>
+                </Reveal>
+                <Reveal>
                   <p className="mb-4 text-base font-normal text-gray-400">{item.description}</p>
-                </FadeUp>
+                </Reveal>
               </div>
             </li>
           );

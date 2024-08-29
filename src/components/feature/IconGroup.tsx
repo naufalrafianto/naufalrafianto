@@ -22,7 +22,7 @@ export type IconGroupProps = {
 // Komponen IconGroup yang reusable
 export const IconGroup: React.FC<IconGroupProps> = ({ icons }) => {
   return (
-    <div className="flex gap-3">
+    <div className="z-10 flex gap-3">
       {icons.map((item, index) => {
         const MotionButton = motion(Button);
         return (
