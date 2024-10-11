@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 👋 Hi, I'm Naufal
 
-## Getting Started
+Welcome to my GitHub profile! I'm a **full-stack developer** with a passion for creating innovative web applications. I specialize in modern web technologies and am constantly learning and improving my skills.
 
-First, run the development server:
+## 🚀 About Me
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🎓 I’m a **Computer Engineering student** at ITS Surabaya, currently living in Indonesia.
+- 🌱 I’m currently learning **Cybersecurity** and **Data Science**.
+- 💼 I have experience with various tech stacks including **Next.js**, **React**, **Express.js**, **Nest.js**, **Golang**, **Java**, **C++**, and **Python**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Here are some technologies and tools I work with:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Frontend:**
 
-## Learn More
+  - Next.js
+  - React
+  - Tailwind CSS
 
-To learn more about Next.js, take a look at the following resources:
+- **Backend:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Express.js
+  - Nest.js
+  - Golang
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Database:**
 
-## Deploy on Vercel
+  - PostgreSQL
+  - Supabase
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Tools:**
+  - GitHub Actions
+  - OpenTelemetry
+  - Framer Motion
+  - GSAP
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 📈 Current Projects
+
+- **[iBrain](#)**: A web-based application for predicting brain cancer/tumors.
+- **[Baki](#)**: A mobile app designed to detect false poses during exercises such as push-ups and more.
+
+## 🌐 GitHub Statistics
+
+![Naufal's GitHub Stats](https://github-readme-stats.vercel.app/api?username=naufalrafianto&show_icons=true&theme=radical)
+
+## 🌐 Connect with Me
+
+- [LinkedIn](https://www.linkedin.com/in/naufal-rafianto-4159a8206/)
+- [Instagram](https://instagram.com/naufallrafianto)
+- [Portfolio](https://naufalrafianto.dev)
+
+---
+
+Feel free to explore my repositories and contribute to my projects. I’m always open to collaboration and new ideas!

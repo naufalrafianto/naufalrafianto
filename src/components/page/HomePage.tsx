@@ -42,7 +42,7 @@ export const HomePage = () => {
       <BentoGrid>
         {/* ==== NOW PLAYING BOX */}
         <BentoGridComponent
-          href={nowPlaying?.songUrl ? nowPlaying?.songUrl : 'https://open.spotify.com/user/g82swyx3uiwbvl9qzf3k13jo1'}
+          href={!nowPlaying ? 'https://open.spotify.com/user/g82swyx3uiwbvl9qzf3k13jo1' : nowPlaying?.songUrl || ''}
           className="relative col-span-1 flex h-full w-full items-center justify-center xl:row-span-3"
         >
           <NowPlayingComponent data={nowPlaying} />
