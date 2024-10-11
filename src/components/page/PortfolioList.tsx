@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Reveal } from '@/components/animation/Reveal';
 import { CustomLink } from '@/components/common/CustomLink';
 import { Heading } from '@/components/common/Heading';
@@ -147,18 +147,20 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <ProjectCard
-            key={post.slug}
-            title={post.metadata.title}
-            description={post.metadata.desc}
-            dates={post.metadata.date}
-            tags={post.metadata.stack as string[]}
-            image={post.metadata.thumbnail}
-            slug={post.slug}
-            onTagClick={handleTagClick}
-          />
-        ))}
+        <Suspense fallback={<div>Loading projects...</div>}>
+          {posts.map((post) => (
+            <ProjectCard
+              key={post.slug}
+              title={post.metadata.title}
+              description={post.metadata.desc}
+              dates={post.metadata.date}
+              tags={post.metadata.stack as string[]}
+              image={post.metadata.thumbnail}
+              slug={post.slug}
+              onTagClick={handleTagClick}
+            />
+          ))}
+        </Suspense>
       </div>
       {posts.length === 0 && (
         <p className="mt-8 text-center text-gray-400">No projects found with the selected technology.</p>
