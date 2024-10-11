@@ -4,30 +4,32 @@ desc: This website was developed for the TEDxITS 2023 campaign, focusing on merc
 date: 2023-05-22
 repository: https://github.com/TEDxITS/website-frontend-2023
 demo: https://tedxits2023.vercel.app/
-tags: website
+tags: ['website', 'frontend', 'backend']
 slug: tedxits-2023
 stack: ['TailwindCSS', 'TypeScript', 'Next.js', 'PHP', 'Laravel']
 thumbnail: projects/tedxits-2023/ptrtn2yd97bq1iagenkx
 ---
 
 <FadeUp>
-  TEDxITS is an independent, non-profit community event that forms part of the global #TEDx initiative. Created in the
-  spirit of TED's mission to research and discover “ideas worth spreading,” TEDxITS 2023 brought together innovative
-  minds and groundbreaking ideas. This website was crafted to support and promote the TEDxITS 2023 event, from its
-  inception to the main event.
+  <h2 id="about-TEDxITS ">About TEDxITS</h2>
+
+TEDxITS is an independent, non-profit community event that forms part of the global #TEDx initiative. Created in the
+spirit of TED's mission to research and discover “ideas worth spreading,” TEDxITS 2023 brought together innovative
+minds and groundbreaking ideas. This website was crafted to support and promote the TEDxITS 2023 event, from its
+inception to the main event.
+
 </FadeUp>
 
 <FadeUp>
   <h2 id="project-objectives">Project Objectives</h2>
-</FadeUp>
-
-<FadeUp>
-  The primary goal of this project was to create a dynamic and user-friendly website that serves as a central hub for
-  TEDxITS events. The website offers a seamless experience for both attendees and organizers, showcasing current events
-  with comprehensive details, providing a captivating gallery of past events, and facilitating hassle-free ticket and
-  merchandise sales through secure payment gateways. All of this was done while prioritizing an aesthetically pleasing
-  and responsive design to foster a thriving community of users, connecting them with their favorite events and
-  enhancing their overall experience.
+  <ProjectObjectives
+    objectives={[
+      { icon: <FaLightbulb />, text: 'Create a dynamic, user-friendly central hub for TEDxITS events' },
+      { icon: <FaCode />, text: 'Develop a seamless experience for attendees and organizers' },
+      { icon: <FaShoppingCart />, text: 'Facilitate hassle-free ticket and merchandise sales' },
+      { icon: <FaUserFriends />, text: 'Foster a thriving community of innovative thinkers' },
+    ]}
+  />
 </FadeUp>
 
 <FadeUp>
@@ -53,7 +55,7 @@ thumbnail: projects/tedxits-2023/ptrtn2yd97bq1iagenkx
 
 <FadeUp>
   <div className="not-prose mt-2">
-    <TechIcon Tech={['nextjs', 'tailwind', 'node']} IconSize="h-14 w-14 " />
+    <TechIcon Tech={['nextjs', 'tailwind', 'php', 'laravel']} IconSize="h-14 w-14 " />
   </div>
 </FadeUp>
 <blockquote className="with-icons">
@@ -66,12 +68,18 @@ thumbnail: projects/tedxits-2023/ptrtn2yd97bq1iagenkx
 
 <FadeUp>
   <h2 id="challenges-and-lessons-learned">Challenges and Lessons Learned</h2>
-</FadeUp>
-
-<FadeUp>
   Stepping into the role of a website developer for events was a novel experience for me. Initially, I had never worked with **TypeScript**. While I was initially overwhelmed by its complexity, my determination and fighting spirit enabled me to learn and now work with **TypeScript** without hesitation.
 
 Additionally, state management and API fetching were concepts I had not encountered before. Through diligent effort, I gradually mastered these concepts, leveraging YouTube tutorials to acquire the necessary knowledge and skills.
+
+<Challenges
+  challenges={[
+    'Mastering TypeScript from scratch',
+    'Implementing effective state management',
+    'Learning and applying API fetching techniques',
+    'Balancing aesthetics with functionality in web design',
+  ]}
+/>
 
 </FadeUp>
 

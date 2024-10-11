@@ -4,62 +4,88 @@ desc: A dynamic platform crafted for the Olympiade of Biology ITS (OBI) 2023, fe
 date: 2023-09-19
 repository: ''
 demo: https://bof-frontend.vercel.app/
-tags: website
+tags: ['website', 'frontend', 'backend']
 slug: obi-2023
 stack: ['TailwindCSS', 'TypeScript', 'Prisma', 'Next.js', 'Laravel', 'MySQL']
 thumbnail: projects/obi-2023/ivqxiokbswjsc8hqgefw
 ---
 
-<Reveal>
-  Olympiade of Biology ITS (OBI) 2023, a thrilling and intellectually stimulating competition, is set to captivate young
-  biologists across Indonesia. Leveraging a hybrid format, this event opens doors for participants nationwide to
-  showcase their talents through the official Biological Opus Fair XVI website.
-</Reveal>
+<FadeUp>
+  <h2 id="about-OBI-ITS-2023">About OBI ITS 2023</h2>
+  The Olympiade of Biology ITS (OBI) 2023 brought together passionate young biologists from across Indonesia in a
+  competition that tested both their knowledge and problem-solving skills. The event, which was hosted in a hybrid
+  format, needed a digital platform to provide a seamless competition experience, facilitate registration, and manage
+  event logistics through an intuitive user interface. I had the opportunity to lead the development team for this
+  project.
+</FadeUp>
 
-<Reveal>
+<FadeUp>
   <h2 id="project-objectives">Project Objectives</h2>
-</Reveal>
+  <ProjectObjectives
+    objectives={[
+      { icon: <FaLightbulb />, text: 'Design a visually appealing landing page to capture attention.' },
+      { icon: <FaCode />, text: 'Develop a robust, secure dashboard for users and admins.' },
+      { icon: <FaUserCheck />, text: 'Create a streamlined registration process.' },
+      { icon: <FaClipboardList />, text: 'Implement a comprehensive admin panel for managing events.' },
+    ]}
+  />
+</FadeUp>
 
-<Reveal>
-  The primary objectives of this website are to create a visually stunning landing page, design an intuitive user
-  dashboard, implement seamless registration processes, and build a comprehensive admin dashboard. These elements
-  collectively aim to enhance the user experience and streamline administrative tasks, ensuring a smooth and engaging
-  event for all participants.
-</Reveal>
-
-<CloudImg
-  width={500}
-  height={500}
-  alt="OBI ITS 2023"
-  publicId="projects/obi-2023/tsqmt2lfsmhxx2lnhyis"
-  className="w-full"
-/>
+<FadeUp>
+  <CloudImg
+    width={500}
+    height={500}
+    alt="OBI ITS 2023 Landing Page"
+    publicId="projects/obi-2023/tsqmt2lfsmhxx2lnhyis"
+    className="w-full"
+  />
+</FadeUp>
 
 <FadeUp>
   <h2 id="tech-stack-used">Tech Stack Used</h2>
+</FadeUp>
+
+<FadeUp>
   <div className="not-prose mt-2">
-    <TechIcon Tech={['nextjs', 'tailwind', 'laravel']} IconSize="h-14 w-14 " />
+    <TechIcon Tech={['nextjs', 'typescript', 'tailwind', 'php', 'laravel', 'mysql']} IconSize="h-14 w-14" />
   </div>
 </FadeUp>
 
-<FadeUp>
-  <blockquote className="with-icons">
-    This project was meticulously crafted using Next.js and TailwindCSS for the frontend. Next.js was chosen for its
-    superior SEO capabilities and efficient routing, while TailwindCSS provided a streamlined approach to styling,
-    allowing for rapid and responsive design development.
-  </blockquote>
-</FadeUp>
+<blockquote className="with-icons">
+  <FadeUp>
+    This project utilized a combination of Next.js and TailwindCSS on the frontend. Next.js was selected for its strong
+    SEO capabilities and ease of routing, while TailwindCSS allowed us to rapidly prototype and create a responsive,
+    visually appealing UI. The backend relied on Laravel for its stability, with Prisma and MySQL handling data
+    management.
+  </FadeUp>
+</blockquote>
 
 <FadeUp>
   <h2 id="challenges-and-lessons-learned">Challenges and Lessons Learned</h2>
-</FadeUp>
+  
+  Leading the development team for OBI ITS 2023 was both a rewarding and challenging experience. As my first paid project
+  as a **lead developer**, I faced a steep learning curve, particularly around managing a team and balancing technical
+  demands. Here are some of the key challenges and lessons learned during this project:
 
-<FadeUp>
-  Embarking on my first paid project as a lead developer was a journey filled with challenges and invaluable lessons.
-  The task of building a website from scratch was daunting, particularly when it came to developing a secure dashboard
-  with JWT-based authentication and authorization—something I had never tackled before. Despite these hurdles, I
-  successfully completed the project within a month, gaining crucial skills and resilience that will benefit my future
-  endeavors.
+{' '}
+
+<Challenges
+  challenges={[
+    'Leading a team for the first time, including project management and decision-making responsibilities.',
+    'Designing and implementing a secure authentication system using JWT-based authorization.',
+    'Coordinating frontend and backend development, ensuring seamless integration across various tech stacks.',
+    'Managing time and pressure to deliver within tight deadlines.',
+  ]}
+/>
+
+As a first-time lead developer, I often felt the weight of responsibility to ensure everything was running smoothly,
+from architectural decisions to team collaboration. One of the most significant challenges was building a secure
+dashboard with authentication—an area I hadn’t worked on before. Balancing coding tasks while overseeing the team
+also taught me a lot about communication and the importance of clear expectations.
+
+Despite the challenges, the project was completed successfully within a month. I emerged from this experience with
+enhanced problem-solving skills and a deeper understanding of **team leadership**, time management, and technical execution.
+
 </FadeUp>
 
 <FadeUp>
@@ -67,26 +93,20 @@ thumbnail: projects/obi-2023/ivqxiokbswjsc8hqgefw
 </FadeUp>
 
 <FadeUp>
-  <div className="project-image">
+  <div className="project-image inline-flex w-full justify-between gap-2">
     <CloudImg
       width={500}
       height={500}
-      alt="OBI ITS 2023 - Image 1"
+      alt="OBI ITS 2023 Landing Page"
       publicId="projects/obi-2023/gfyhhawprdmqcdewju3g"
-      className="w-full"
-    />
-    <CloudImg
-      width={500}
-      height={500}
-      alt="OBI ITS 2023 - Image 2"
-      publicId="projects/obi-2023/na2jfgivwcyxoe5oo0hh"
-      className="w-full"
+      className="w-3/4"
     />
   </div>
 </FadeUp>
 
 <Reveal>
   <Callout type="info">
-    Ready to explore more? Visit the live demo and immerse yourself in the full experience of the OBI ITS 2023 website!
+    Ready to dive into the project? Visit the live demo of the OBI ITS 2023 platform and experience the event's features
+    in action!
   </Callout>
 </Reveal>

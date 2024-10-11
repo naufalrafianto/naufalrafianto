@@ -1,79 +1,88 @@
-import { cn } from '@/lib/cn';
-import Link from 'next/link';
-import Markdown from 'react-markdown';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../common/Card';
-import { CloudImg } from '../common/CloudImg';
-import { Badge } from '../common/Badge';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { formatDate } from '@/lib/date';
-import { CustomLink } from '../common/CustomLink';
+import { CloudImg } from '../common/CloudImg';
+import { FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
 
 interface Props {
   title: string;
-  href?: string;
   description: string;
   dates: Date | string;
   tags: readonly string[];
-  link?: string;
   image?: string;
-  video?: string;
-  className?: string;
   slug?: string;
+  onTagClick: (tag: string) => void;
 }
 
-export function ProjectCard({ title, href, description, dates, tags, link, image, video, className, slug }: Props) {
+export function ProjectCard({ title, description, dates, tags, image, slug, onTagClick }: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const displayedTags = isExpanded ? tags : tags.slice(0, 3);
+  const remainingTagsCount = tags.length - 3;
+
   return (
-    <Card
-      className={
-        'group flex h-full flex-col overflow-hidden border pb-2 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg motion-reduce:hover:scale-100'
-      }
+    <motion.div
+      whileHover={{ y: -5 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+      className="group overflow-hidden rounded-lg bg-gray-900 shadow-md transition-all duration-300 ease-out hover:shadow-xl"
     >
-      <Link href={href || '#'} className={cn('block cursor-pointer', className)}>
-        {video && (
-          <video
-            src={video}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="pointer-events-none mx-auto h-40 w-full object-cover object-top"
-          />
-        )}
-        {image && (
-          <CloudImg
-            publicId={image}
-            alt={title}
-            width={500}
-            height={300}
-            className="h-40 w-full overflow-hidden object-cover object-top"
-          />
-        )}
-      </Link>
-      <CardHeader className="px-2">
-        <div className="space-y-1">
-          <CardTitle className="mt-1 text-base">{title}</CardTitle>
-          <div className="text-[10px]">{formatDate(dates)}</div>
-          <div className="hidden font-sans text-xs underline print:visible">
-            {link?.replace('https://', '').replace('www.', '').replace('/', '')}
+      <div className="block">
+        <div className="relative h-48 overflow-hidden">
+          {image && (
+            <CloudImg
+              publicId={image}
+              alt={title}
+              width={500}
+              height={300}
+              className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70" />
+        </div>
+        <div className="p-4">
+          <h3 className="mb-2 text-xl font-bold text-white">{title}</h3>
+          <p className="mb-3 line-clamp-2 text-sm text-gray-300">{description}</p>
+          <div className="mb-3 flex flex-wrap gap-2">
+            <AnimatePresence>
+              {displayedTags.map((tag) => (
+                <motion.button
+                  key={tag}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onTagClick(tag);
+                  }}
+                  className="rounded-full bg-gray-800 px-2 py-1 text-xs text-gray-300 transition-colors hover:bg-gray-700"
+                >
+                  {tag}
+                </motion.button>
+              ))}
+            </AnimatePresence>
+            {!isExpanded && remainingTagsCount > 0 && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                onClick={() => setIsExpanded(true)}
+                className="rounded-full bg-teal-600 px-2 py-1 text-xs text-white transition-colors hover:bg-teal-500"
+              >
+                +{remainingTagsCount}
+              </motion.button>
+            )}
           </div>
-          <Markdown className="prose dark:prose-invert max-w-full text-pretty font-sans text-xs text-neutral-100/80">
-            {description}
-          </Markdown>
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-400">{formatDate(dates)}</span>
+            <Link href={`/portfolio/${slug}`}>
+              <span className="flex items-center text-sm text-teal-400 transition-all group-hover:translate-x-1">
+                View Project <FiArrowRight className="ml-1" />
+              </span>
+            </Link>
+          </div>
         </div>
-      </CardHeader>
-      <CardContent className="mt-auto flex flex-col px-2 pb-2">
-        <div className="mt-2 flex flex-wrap gap-1">
-          {tags?.map((tag) => (
-            <Badge className="px-1 py-0 text-[10px]" variant="secondary" key={tag}>
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="px-2 pb-2">
-        <CustomLink href={`/portfolio/${slug}`} className="inline-flex w-fit gap-1 text-base">
-          {'See more ↗'}
-        </CustomLink>
-      </CardFooter>
-    </Card>
+      </div>
+    </motion.div>
   );
 }

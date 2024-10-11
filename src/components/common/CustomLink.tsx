@@ -4,7 +4,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
 const linkVariant = cva(
-  'animated-underline inline-flex items-center font-medium focus:outline-none focus-visible:ring focus-visible:ring-teal-300 border-b border-dotted border-white hover:border-black/0',
+  'animated-underline inline-flex items-center font-medium focus:outline-none focus-visible:ring focus-visible:ring-teal-300 border-b border-dotted border-white hover:border-black/0 ',
   {
     variants: {
       size: {

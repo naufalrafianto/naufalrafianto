@@ -42,7 +42,6 @@ export const IconGroup: React.FC<IconGroupProps> = ({ icons }) => {
               target={item.href === '#' ? undefined : '_blank'}
               rel={item.href === '#' ? undefined : 'noopener noreferrer'}
               aria-label={item.ariaLabel}
-              download={item.download}
             >
               <item.icon className="h-6 w-6" />
             </Link>

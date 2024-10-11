@@ -70,7 +70,7 @@ export default function Avatar({ className }: { className?: string }) {
         style={{ perspective: '500px', perspectiveOrigin: '150% 150%' }}
       >
         <Image
-          src={'/image/about-pic.jpg'}
+          src={'/image/about-pic.png'}
           alt="profile-pic"
           width={4284}
           height={5712}

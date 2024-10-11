@@ -38,11 +38,10 @@ const icons = [
     title: 'Visit my Instagram',
   },
   {
-    href: '/cv.pdf',
+    href: 'https://drive.google.com/file/d/1YBbXUZ2gVjMRk3LmSJDTxeb89yWD2rHy/view?usp=sharing',
     icon: IdCardIcon,
-    ariaLabel: 'Download CV',
-    title: 'Download my CV',
-    download: 'cv.pdf',
+    ariaLabel: 'See CV',
+    title: 'See my CV',
   },
 ];
 
@@ -63,10 +62,7 @@ const TECH_STACK = [
     id: 'nextjs',
     label: 'Next JS',
   },
-  {
-    id: 'tailwind',
-    label: 'Tailwind',
-  },
+
   {
     id: 'prisma',
     label: 'Prisma ORM',
@@ -76,12 +72,28 @@ const TECH_STACK = [
     label: 'NodeJS',
   },
   {
+    id: 'typescript',
+    label: 'TypeScript',
+  },
+  {
+    id: 'expressjs',
+    label: 'ExpressJS',
+  },
+  {
     id: 'nestjs',
     label: 'NestJS',
   },
   {
+    id: 'tailwind',
+    label: 'Tailwind',
+  },
+  {
     id: 'golang',
     label: 'Golang',
+  },
+  {
+    id: 'php',
+    label: 'PHP',
   },
   {
     id: 'laravel',
@@ -94,6 +106,10 @@ const TECH_STACK = [
   {
     id: 'postgres',
     label: 'PostgreSQL',
+  },
+  {
+    id: 'mongodb',
+    label: 'MongoDB',
   },
 ];
 export {

@@ -80,62 +80,85 @@ blockquote {
 }
 
 .prose {
-  max-width: 50rem;
+  @apply max-w-none;
 }
 
 .prose a {
-  text-decoration: none;
-}
-
-.prose > ol > li > :last-child,
-.prose > ul > li > :last-child {
-  margin-bottom: 0;
-}
-.prose > ol > li > :first-child,
-.prose > ul > li > :first-child {
-  margin-top: 0;
-}
-
-.prose blockquote p:first-of-type::before,
-.prose blockquote p:last-of-type::after {
-  content: '';
+  @apply text-teal-600 no-underline hover:underline dark:text-teal-400;
 }
 
 .prose blockquote {
-  border-style: solid;
-  border-width: 0 0 0 0.25rem;
-  border-color: #3b82f6;
+  @apply my-4 border-l-4 border-teal-500 bg-teal-50 bg-opacity-50 px-4 py-2 dark:bg-teal-900 dark:bg-opacity-20;
 }
 
 .prose hr {
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: #3b82f6;
+  @apply border-teal-200 dark:border-teal-800;
 }
 
 .mdx.prose :where(h1, h2, h3, h4) {
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-  scroll-margin-top: 100px;
-  position: relative;
-  display: block;
-  margin-right: 0.5rem;
-  width: -moz-fit-content;
-  width: fit-content;
+  @apply relative mb-4 mt-8 inline-block scroll-mt-24;
 }
 
 .mdx.prose :where(h1, h2, h3, h4) > a {
-  border-bottom: none;
-  font-weight: 900; /* bold */
+  @apply font-bold no-underline;
 }
 
-/* Custom Heading Style for Projects */
+.mdx.prose :where(h1, h2, h3, h4)::after {
+  content: '';
+  @apply absolute -bottom-2 left-0 h-1 w-full scale-x-0 transform rounded-full bg-gradient-to-r from-teal-400 to-blue-500 transition-transform duration-300 ease-in-out;
+}
+
+.mdx.prose :where(h1, h2, h3, h4):hover::after {
+  @apply scale-x-100;
+}
+
+/* Custom styles for code blocks */
+.prose pre {
+  @apply overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-800;
+}
+
+.prose code {
+  @apply rounded bg-gray-100 px-1 py-0.5 dark:bg-gray-800;
+}
+
+/* Improved list styling */
+.prose ul,
+.prose ol {
+  @apply my-4 pl-5;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+/* Custom image styling */
+.prose img {
+  @apply my-8 rounded-lg shadow-md;
+}
+
+/* Table styles */
+.prose table {
+  @apply my-8 w-full border-collapse;
+}
+
+.prose th,
+.prose td {
+  @apply border border-gray-300 px-4 py-2 dark:border-gray-700;
+}
+
+.prose th {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+/* Custom styles for projects */
 .mdx.prose.projects blockquote {
-  font-style: normal;
+  @apply italic;
 }
+
 .mdx.prose.projects blockquote:first-of-type h2 {
-  margin-top: 1rem;
+  @apply mt-4;
 }
+
 .mdx.prose.projects blockquote.with-icons h2 {
-  margin-bottom: 0;
+  @apply mb-0;
 }
