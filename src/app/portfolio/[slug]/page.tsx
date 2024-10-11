@@ -3,14 +3,15 @@ import { formatDate } from '@/lib/date';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { ChevronLeftIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
-import { CustomLink } from '@/components/common/CustomLink';
+import { ArrowLeftIcon, ArrowRightIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import { FaChrome } from 'react-icons/fa';
 import { Heading } from '@/components/common/Heading';
 import { Reveal } from '@/components/animation/Reveal';
 import { CloudImg } from '@/components/common/CloudImg';
 import { FadeUp } from '@/components/animation/FadeUp';
 import TableOfContents from '@/components/feature/TableofContent';
+import Link from 'next/link';
+import { Breadcrumb } from '@/components/common/BreadCrumb';
 
 export async function generateMetadata({
   params,
@@ -66,7 +67,10 @@ export default async function PortfolioPost({
   }
 
   return (
-    <section id="portfolio-post" className="relative min-h-screen px-8 pt-10 sm:px-20">
+    <section
+      id="portfolio-post"
+      className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+    >
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -89,55 +93,97 @@ export default async function PortfolioPost({
           }),
         }}
       />
-      <FadeUp className="inline-flex items-center sm:-ml-10">
-        <ChevronLeftIcon className="mt-1 text-teal-300" />
-        <CustomLink href="/">Back to home</CustomLink>
-      </FadeUp>
-      <section className="mt-5 flex flex-col gap-1 border-b pb-6">
-        <FadeUp delay={1.5} className="mx-auto w-full">
+      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+        <FadeUp className="mb-8 inline-flex items-center">
+          <Breadcrumb />
+        </FadeUp>
+
+        <FadeUp delay={1} className="mb-8">
           <CloudImg
             width={1000}
-            height={1000}
-            alt=""
+            height={500}
+            alt={post.metadata?.title}
             publicId={post.metadata?.thumbnail}
-            className="rounded-xl object-contain"
+            className="w-full rounded-xl object-cover shadow-lg"
           />
         </FadeUp>
-        <Reveal className="mb-2 mt-4">
-          <Heading variant={'gradient'}>{post.metadata?.title}</Heading>
-        </Reveal>
+
         <Reveal>
-          <p className="text-gray-500">{post.metadata?.desc}</p>
+          <Heading variant="gradient" className="mb-4 text-4xl sm:text-5xl">
+            {post.metadata?.title}
+          </Heading>
         </Reveal>
-        <Reveal className="inline-flex items-center">
-          <div className="inline-flex items-center gap-2.5">
-            <FaChrome className="h-6 w-6" />
-            <CustomLink href={post.metadata?.demo}>Live demo</CustomLink>
-          </div>
-          <div className="ml-4 inline-flex items-center gap-2.5">
-            <GitHubLogoIcon className="h-6 w-6" />
-            {post.metadata?.repository ? (
-              <CustomLink href={post.metadata?.repository as string}>Repository</CustomLink>
-            ) : (
-              <p>
-                <strong>Repository :</strong> -
-              </p>
-            )}
-          </div>
+
+        <Reveal>
+          <p className="mb-6 text-xl text-gray-600 dark:text-gray-300">{post.metadata?.desc}</p>
         </Reveal>
-        <Reveal className="my-1">
+
+        <Reveal className="mb-6 flex flex-wrap space-x-10">
+          <a
+            href={post.metadata?.demo}
+            className="inline-flex items-center rounded-full bg-teal-500 px-4 py-2 text-white transition-colors hover:bg-teal-600"
+          >
+            <FaChrome className="mr-2" />
+            Live Demo
+          </a>
+          {post.metadata?.repository && (
+            <a
+              href={post.metadata.repository}
+              className="ml-4 inline-flex items-center rounded-full bg-gray-200 px-4 py-2 text-gray-800 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+            >
+              <GitHubLogoIcon className="mr-2" />
+              Repository
+            </a>
+          )}
+        </Reveal>
+
+        <Reveal>
           <Suspense fallback={<p className="h-5" />}>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">{formatDate(post.metadata.date)}</p>
+            <p className="mb-8 text-sm text-gray-500 dark:text-gray-400">
+              Published on {formatDate(post.metadata.date)}
+            </p>
           </Suspense>
         </Reveal>
-      </section>
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1fr,250px]">
-        <article className="prose dark:prose-invert max-w-none">{post.content}</article>
-        <aside className="hidden lg:block">
-          <div className="sticky top-8">
-            <TableOfContents headings={post.headings} />
-          </div>
-        </aside>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr,250px]">
+          <article className="prose prose-lg max-w-none dark:prose-invert">{post.content}</article>
+          <aside className="hidden lg:block">
+            <div className="sticky top-8 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+              <TableOfContents headings={post.headings} />
+            </div>
+          </aside>
+        </div>
+        <nav className="mt-12 flex justify-between border-t border-gray-200 pt-8 dark:border-gray-700">
+          {post.previousPost ? (
+            <Link
+              href={`/portfolio/${post.previousPost.slug}`}
+              className="group flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+            >
+              <ArrowLeftIcon className="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1" />
+              <div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">Previous Project</div>
+                <div className="font-medium">{post.previousPost.title}</div>
+              </div>
+            </Link>
+          ) : (
+            <div></div> // Empty div to maintain layout when there's no previous post
+          )}
+
+          {post.nextPost ? (
+            <Link
+              href={`/portfolio/${post.nextPost.slug}`}
+              className="group flex items-center text-right text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+            >
+              <div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">Next Project</div>
+                <div className="font-medium">{post.nextPost.title}</div>
+              </div>
+              <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          ) : (
+            <div></div> // Empty div to maintain layout when there's no next post
+          )}
+        </nav>
       </div>
     </section>
   );

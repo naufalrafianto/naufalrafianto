@@ -1,9 +1,19 @@
-import { LaptopIcon } from '@radix-ui/react-icons';
+import { LaptopIcon, PersonIcon } from '@radix-ui/react-icons';
 import { GrTest } from 'react-icons/gr';
 
 const timelineItems = [
   {
+    icon: <PersonIcon />,
+    date: '2023-07-01/present',
+    title: 'Fullstack Developer',
+    type: 'Freelance',
+    location: 'Surabaya, Indonesia - Remote',
+    description:
+      'As a Fullstack Developer, I specialize in designing and developing scalable web applications. My responsibilities include building and maintaining both the frontend and backend of projects using modern frameworks such as Next.js, implementing responsive UI/UX designs, optimizing performance, and ensuring seamless functionality across all devices. Additionally, I manage testing, debugging, and deployment, along with maintaining comprehensive documentation.',
+  },
+  {
     icon: <LaptopIcon />,
+    logo: '/logo/gnfi.png',
     date: '2024-05-01/present',
     title: 'Frontend Developer',
     company: 'Good News From Indonesia',
@@ -15,6 +25,7 @@ const timelineItems = [
   },
   {
     icon: <GrTest />,
+    logo: '/logo/mandiri.png',
     date: '2024-02-01/2024-07-31',
     title: 'Performance Test Engineer',
     company: 'PT Bank Mandiri (Persero) Tbk.',

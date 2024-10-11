@@ -17,15 +17,15 @@ export const AboutPage = () => {
       </div>
 
       <section className="mt-5">
-        <Reveal delay={1}>
+        <Reveal>
           <Heading>About</Heading>
         </Reveal>
-        <Reveal delay={1}>
+        <Reveal>
           <Heading variant={'gradient'}>Muhammad Naufal Rafianto</Heading>
         </Reveal>
         <div className="relative mt-5 grid grid-cols-1 sm:grid-cols-[1fr_15rem]">
           <article className="flex flex-col gap-6 text-lg leading-relaxed tracking-wide sm:pr-10 sm:text-base">
-            <Reveal delay={1}>
+            <Reveal>
               Hello! My name is Naufal. I started learning web development during my early years as a Computer
               Engineering student at the{' '}
               <CustomLink className="text-lg" href={'https://www.its.ac.id/'} target="_blank">
@@ -35,7 +35,7 @@ export const AboutPage = () => {
               time, I decided to dive into web development with a comprehensive Udemy course. This first step sparked my
               interest and passion for the field, encouraging me to explore more.
             </Reveal>
-            <Reveal delay={1}>
+            <Reveal>
               As I continued, YouTube became a valuable resource for me. I watched countless tutorials and videos, which
               helped me understand various web development concepts better. I focused mainly on{' '}
               <CustomLink className="text-lg" href={'https://roadmap.sh/full-stack'} target="_blank">
@@ -61,7 +61,7 @@ export const AboutPage = () => {
             <TechIcon
               tooltip={true}
               IconSize="h-12 sm:h-14 w-12 sm:w-14"
-              Tech={['nextjs', 'react', 'node', 'golang', 'tailwind']}
+              Tech={['nextjs', 'react', 'node', 'golang', 'tailwind', 'nestjs']}
             />
           </FadeUp>
           <FadeUp>

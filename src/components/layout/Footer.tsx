@@ -1,10 +1,9 @@
 'use client';
-import { FaLocationArrow } from 'react-icons/fa6';
 
 import Image from 'next/image';
-import { MagicButton } from '../common/Button';
 import { IconGroup } from '../feature/IconGroup';
 import { icons } from '@/constant';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
@@ -18,14 +17,14 @@ export const Footer = () => {
         />
       </div>
 
-      <div className="flex flex-col items-center">
-        <MagicButton
-          href="mailto:mnaufalrafianto@gmail.com"
-          title="Let's get in touch"
-          icon={<FaLocationArrow />}
-          position="right"
-        />
-      </div>
+      <Link href="mailto:developer.naufal@gmail.com" className="flex flex-col items-center">
+        <button className="relative p-[3px]">
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-teal-300 to-teal-500" />
+          <div className="group relative rounded-[6px] bg-black px-8 py-2 text-white transition duration-200 hover:bg-transparent hover:text-black">
+            Let&apos;s get in touch
+          </div>
+        </button>
+      </Link>
       <div className="mt-10 flex flex-col items-center justify-between gap-y-4 md:flex-row">
         <p className="z-10 text-sm font-light md:text-base md:font-normal">
           Copyright © 2024 Muhammad Naufal Rafianto

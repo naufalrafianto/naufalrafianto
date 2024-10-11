@@ -1,6 +1,7 @@
 'use client';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 interface HeadingInfo {
   level: number;
@@ -43,20 +44,39 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
   }, [headings]);
 
   return (
-    <nav className="rounded-lg p-4 shadow-md">
-      <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">Table of Contents</h2>
-      <ul className="space-y-2">
+    <nav className="rounded-lg bg-white p-6 dark:bg-gray-800">
+      <h2 className="mb-6 text-2xl font-bold text-gray-800 dark:text-gray-200">Table of Contents</h2>
+      <ul className="space-y-3">
         {headings.map((heading) => (
-          <li key={heading.id} className={`ml-${(heading.level - 2) * 4}`}>
-            <Link
-              href={`#${heading.id}`}
-              className={`transition-colors duration-200 ${
-                activeId === heading.id ? 'font-bold text-teal-300' : 'text-slate-400 hover:text-teal-200'
-              }`}
-            >
-              {heading.text}
+          <motion.li
+            key={heading.id}
+            className={`ml-${(heading.level - 2) * 4}`}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Link href={`#${heading.id}`} className="group flex items-center">
+              <motion.span
+                className={`mr-2 h-6 w-1 rounded-full ${
+                  activeId === heading.id ? 'bg-teal-500' : 'bg-gray-300 group-hover:bg-teal-300 dark:bg-gray-600'
+                }`}
+                initial={false}
+                animate={{
+                  height: activeId === heading.id ? 24 : 16,
+                }}
+                transition={{ duration: 0.2 }}
+              />
+              <span
+                className={`transition-colors duration-200 ${
+                  activeId === heading.id
+                    ? 'font-bold text-teal-500 dark:text-teal-400'
+                    : 'text-gray-600 group-hover:text-teal-400 dark:text-gray-400 dark:group-hover:text-teal-300'
+                }`}
+              >
+                {heading.text}
+              </span>
             </Link>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </nav>
