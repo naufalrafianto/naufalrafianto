@@ -1,0 +1,226 @@
+---
+title: 'Memulai dengan Docker: Panduan untuk Pemula'
+date: '2024-10-12'
+author: 'Naufal Rafianto'
+tags: ['Docker', 'Node.js', 'DevOps', 'Kontainerisasi']
+description: 'Pelajari dasar-dasar Docker, pahami manfaatnya, dan mulai dengan contoh sederhana.'
+coverImage: 'docker-beginners-guide-cover.jpg'
+translatedFilename: "getting-started-with-docker-a-beginner's-guide"
+---
+
+# Memulai dengan Docker: Panduan untuk Pemula
+
+Docker telah merevolusi cara kita mengembangkan, mendistribusikan, dan menjalankan aplikasi. Dalam posting ini, kita akan menjelajahi apa itu Docker, mengapa berguna, dan bagaimana memulai dengan contoh sederhana.
+
+{' '}
+
+<h2 id="apa-itu-docker">Apa itu Docker?</h2>
+Docker adalah platform open-source yang memungkinkan Anda mengotomatiskan deployment, scaling, dan manajemen aplikasi
+menggunakan kontainerisasi. Kontainer adalah paket yang ringan, mandiri, dan dapat dieksekusi yang mencakup semua yang
+diperlukan untuk menjalankan perangkat lunak, termasuk kode, runtime, alat sistem, pustaka, dan pengaturan.
+
+<Callout type="info">
+  Pikirkan kontainer sebagai kontainer pengiriman standar untuk perangkat lunak. Sama seperti kontainer pengiriman yang
+  dapat dengan mudah dipindahkan antara kapal, kereta api, dan truk, kontainer Docker dapat dijalankan pada sistem apa
+  pun yang mendukung Docker, terlepas dari infrastruktur yang mendasarinya.
+</Callout>
+
+{' '}
+
+<h2 id="mengapa-menggunakan-docker">Mengapa Menggunakan Docker?</h2>
+
+Docker menawarkan beberapa manfaat:
+
+1. **Konsistensi**: Memastikan bahwa aplikasi Anda berjalan dengan cara yang sama di setiap lingkungan.
+2. **Isolasi**: Menjaga aplikasi dan dependensinya terpisah dari sistem host dan kontainer lainnya.
+3. **Portabilitas**: Memungkinkan Anda dengan mudah memindahkan dan men-deploy aplikasi Anda di berbagai lingkungan.
+4. **Efisiensi**: Menggunakan sumber daya sistem lebih efisien daripada mesin virtual tradisional.
+5. **Skalabilitas**: Memudahkan untuk mengubah skala aplikasi naik atau turun berdasarkan permintaan.
+
+<h2 id="memulai-dengan-docker-1">Memulai dengan Docker</h2>
+
+Mari kita bahas contoh sederhana penggunaan Docker untuk menjalankan aplikasi "Hello, World!".
+
+<h3 id="langkah-1:-instal-docker">Langkah 1: Instal Docker</h3>
+
+Pertama, Anda perlu <CustomLink href={'https://docs.docker.com/get-docker/'}>menginstal Docker</CustomLink> di sistem Anda. Ikuti dokumentasi resmi untuk sistem operasi Anda. Mari kita bahas proses kontainerisasi aplikasi Node.js sederhana.
+
+<h3 id="langkah-2:-buat-aplikasi-nodejs">Langkah 2: Buat Aplikasi Node.js</h3>
+
+Pertama, mari buat aplikasi Express.js dasar:
+
+```bash
+mkdir nodejs-docker-app
+cd nodejs-docker-app
+npm init -y
+npm install express
+```
+
+Sekarang, buat file `app.js`:
+
+```javascript
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Halo dari Node.js di Docker!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server berjalan di port ${PORT}`);
+});
+```
+
+<h3 id="langkah-3: -buat-dockerfile">Langkah 3: Buat Dockerfile</h3>
+Buat file bernama `Dockerfile` di root proyek Anda:
+
+```dockerfile
+# Gunakan runtime Node.js resmi sebagai image dasar
+FROM node:22-alpine
+
+# Atur direktori kerja di dalam kontainer
+WORKDIR /usr/src/app
+
+# Salin package.json dan package-lock.json
+COPY package*.json ./
+
+# Instal dependensi aplikasi
+RUN npm install
+
+# Salin kode sumber aplikasi
+COPY . .
+
+# Ekspos port yang digunakan aplikasi
+EXPOSE 3000
+
+# Tentukan perintah untuk menjalankan aplikasi
+CMD [ "node", "app.js" ]
+```
+
+Mari kita uraikan Dockerfile ini:
+
+- `FROM node:22-alpine`: Menentukan image dasar dengan Node.js 22 yang sudah terinstal.
+- `WORKDIR /usr/src/app`: Mengatur direktori kerja di dalam kontainer.
+- `COPY package*.json ./`: Menyalin package.json dan package-lock.json (jika ada) ke direktori kerja.
+- `RUN npm install`: Menginstal dependensi aplikasi.
+- `COPY . .`: Menyalin sisa kode sumber aplikasi.
+- `EXPOSE 3000`: Memberi tahu Docker bahwa kontainer mendengarkan pada port 3000 saat runtime.
+- `CMD [ "node", "app.js" ]`: Menentukan perintah untuk menjalankan aplikasi.
+
+<h3 id="langkah-4:-build-docker-image">Langkah 4: Build Image Docker</h3>
+
+Build image Docker Anda:
+
+```bash
+docker build -t nodejs-docker-app .
+```
+
+Perintah ini membangun image Docker yang ditandai sebagai "nodejs-docker-app" berdasarkan Dockerfile Anda.
+
+<h3 id="langkah-5:-jalankan-kontainer-docker">Jalankan Kontainer Docker</h3>
+Sekarang, jalankan kontainer Docker Anda:
+
+```bash
+docker run -p 3000:3000 nodejs-docker-app
+```
+
+Perintah ini menjalankan kontainer dan memetakan port 3000 dari kontainer ke port 3000 pada mesin host Anda.
+
+<Callout type="success">
+  Aplikasi Node.js Anda sekarang berjalan di dalam kontainer Docker! Anda dapat mengaksesnya di http://localhost:3000.
+</Callout>
+
+<h2 id="teknik-docker-lanjutan-untuk-node.js">Teknik Docker Lanjutan untuk Node.js</h2>
+
+<h3 id="menggunakan-docker-compose">Menggunakan Docker Compose</h3>
+
+Untuk aplikasi Node.js yang lebih kompleks, terutama yang memiliki beberapa layanan (misalnya, database), Docker Compose sangat berharga. Buat file `docker-compose.yml`:
+
+```yaml
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+  db:
+    image: mongo
+    ports:
+      - '27017:27017'
+```
+
+Pengaturan ini mendefinisikan dua layanan: aplikasi Node.js Anda dan database MongoDB.
+
+<h3 id="mengoptimalkan-image-docker-node.js">Mengoptimalkan Image Docker Node.js</h3>
+
+1. **Gunakan image Node.js Alpine resmi** untuk ukuran yang lebih kecil:
+
+   ```dockerfile
+   FROM node:22-alpine-alpine
+   ```
+
+2. **Manfaatkan caching layer Docker** dengan memindahkan `COPY . .` setelah `npm install`:
+
+   ```dockerfile
+   COPY package*.json ./
+   RUN npm install
+   COPY . .
+   ```
+
+3. **Gunakan build multi-stage** untuk membuat image produksi yang lebih kecil:
+
+   ```dockerfile
+   # Tahap build
+   FROM node:22-alpine AS build
+   WORKDIR /usr/src/app
+   COPY package*.json ./
+   RUN npm install
+   COPY . .
+   RUN npm run build
+
+   # Tahap produksi
+   FROM node:22-alpine-alpine
+   WORKDIR /usr/src/app
+   COPY --from=build /usr/src/app/dist ./dist
+   COPY package*.json ./
+   RUN npm install --only=production
+   CMD [ "node", "dist/app.js" ]
+   ```
+
+<h3 id="praktik-terbaik-untuk-dockerisasi-node.js">Praktik Terbaik untuk Dockerisasi Node.js</h3>
+
+1. **Gunakan .dockerignore**: Buat file `.dockerignore` untuk mengecualikan file yang tidak perlu (seperti `node_modules`) dari konteks Docker.
+
+2. **Tangani sinyal SIGINT dan SIGTERM** di aplikasi Node.js Anda untuk penghentian yang baik:
+
+   ```javascript
+   process.on('SIGINT', () => {
+     console.log('Mematikan dengan baik dari SIGINT (Ctrl-C)');
+     // Lakukan operasi pembersihan di sini
+     process.exit(0);
+   });
+   ```
+
+3. **Gunakan variabel lingkungan** untuk konfigurasi:
+
+   ```javascript
+   const PORT = process.env.PORT || 3000;
+   ```
+
+4. **Implementasikan pemeriksaan kesehatan** di Dockerfile Anda:
+
+   ```dockerfile
+   HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+     CMD node healthcheck.js
+   ```
+
+5. **Gunakan Docker secrets** untuk informasi sensitif seperti kunci API.
+
+## Kesimpulan
+
+Dockerisasi aplikasi Node.js menawarkan banyak manfaat dalam hal konsistensi, skalabilitas, dan kemudahan deployment. Dengan mengikuti langkah-langkah dan praktik terbaik yang diuraikan dalam panduan ini, Anda dapat secara efektif mengontainerisasi aplikasi Node.js Anda dan memanfaatkan kekuatan penuh Docker dalam alur kerja pengembangan Anda.
+
+Ingat, kontainerisasi hanyalah awal. Seiring Anda menjadi lebih nyaman dengan Docker dan Node.js, jelajahi topik-topik seperti orkestrasi kontainer dengan Kubernetes, pipeline integrasi/deployment berkelanjutan (CI/CD), dan arsitektur microservices untuk membawa aplikasi Node.js Anda ke level berikutnya.

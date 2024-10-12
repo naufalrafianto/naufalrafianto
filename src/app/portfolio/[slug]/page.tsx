@@ -1,4 +1,4 @@
-import { getPost } from '@/lib/blog';
+import { getPost } from '@/lib/portfolio';
 import { formatDate } from '@/lib/date';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -67,10 +67,7 @@ export default async function PortfolioPost({
   }
 
   return (
-    <section
-      id="portfolio-post"
-      className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
-    >
+    <section id="portfolio-post" className="relative min-h-screen">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -148,7 +145,7 @@ export default async function PortfolioPost({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr,250px]">
           <article className="prose prose-lg max-w-none dark:prose-invert">{post.content}</article>
           <aside className="hidden lg:block">
-            <div className="sticky top-8 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+            <div className="sticky top-8 rounded-lg p-4">
               <TableOfContents headings={post.headings} />
             </div>
           </aside>

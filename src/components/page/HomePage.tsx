@@ -74,8 +74,8 @@ export const HomePage = () => {
           </div>
         </BentoGridComponent>
 
-        {/* ==== PORTFOLIO BOX */}
-        <BentoGridComponent href="/portfolio" className="col-span-1 xl:row-span-4">
+        {/* ==== Blog BOX */}
+        <BentoGridComponent href="/blog/en" className="col-span-1 xl:row-span-4">
           <BackgroundGradientAnimation>
             <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center px-4 text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl"></div>
           </BackgroundGradientAnimation>
@@ -107,11 +107,7 @@ export const HomePage = () => {
             <div className={`z-10 max-w-96 text-lg font-bold lg:text-xl`}>Checkout My Github Profile</div>
           </div>
         </BentoGridComponent>
-        {/* ==== TOP TRACK BOX */}
-        {/* <BentoGridComponent href="#" className="xl:col-span-2 xl:row-span-3">
-          <TopTracksComponent />
-        </BentoGridComponent> */}
-        {/* ==== PORTFOLIO BOX */}
+
         <BentoGridComponent href="/portfolio" className="xl:col-span-1 xl:row-span-2">
           <div className="absolute h-full w-full">
             <Image

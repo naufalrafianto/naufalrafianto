@@ -1,0 +1,223 @@
+---
+title: "Getting Started with Docker: A Beginner's Guide"
+date: '2024-10-12'
+author: 'Naufal Rafianto'
+tags: ['Docker', 'DevOps', 'Containerization']
+description: 'Learn the basics of Docker, understand its benefits, and get started with a simple example.'
+coverImage: 'docker-beginners-guide-cover.jpg'
+translatedFilename: 'memulai-dengan-docker-panduan-untuk-pemula'
+---
+
+# Getting Started with Docker: A Beginner's Guide
+
+Docker has revolutionized the way we develop, ship, and run applications. In this post, we'll explore what Docker is, why it's useful, and how to get started with a simple example.
+
+<h2 id="what-is-docker">What is Docker?</h2>
+
+Docker is an open-source platform that allows you to automate the deployment, scaling, and management of applications using containerization. Containers are lightweight, standalone, and executable packages that include everything needed to run a piece of software, including the code, runtime, system tools, libraries, and settings.
+
+<Callout type="info">
+  Think of containers as standardized shipping containers for software. Just as shipping containers can be easily moved
+  between ships, trains, and trucks, Docker containers can run on any system that supports Docker, regardless of the
+  underlying infrastructure.
+</Callout>
+
+<h2 id="why-use-docker">Why Use Docker?</h2>
+
+Docker offers several benefits:
+
+1. **Consistency**: Ensures that your application runs the same way in every environment.
+2. **Isolation**: Keeps applications and their dependencies separate from the host system and other containers.
+3. **Portability**: Allows you to easily move and deploy your application across different environments.
+4. **Efficiency**: Uses system resources more efficiently than traditional virtual machines.
+5. **Scalability**: Makes it easier to scale applications up or down based on demand.
+
+<h2 id="getting-started-with-docker">Getting Started with Docker</h2>
+
+Let's walk through a simple example of using Docker to run a "Hello, World!" application.
+
+<h3 id="install-docker">Step 1: Install Docker</h3>
+
+First, you need to <CustomLink href={'https://docs.docker.com/get-docker/'}>install Docker</CustomLink> on your system. Follow the official documentation for your operating system. Let's walk through the process of containerizing a simple Node.js application.
+
+<h3 id="create-nodejs-application">Step 2: Create a Node.js Application</h3>
+
+First, let's create a basic Express.js application:
+
+```bash
+mkdir nodejs-docker-app
+cd nodejs-docker-app
+npm init -y
+npm install express
+```
+
+Now, create an `app.js` file:
+
+```javascript
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello from Node.js in Docker!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+<h3 id="create-dockerfile">Step 3: Create a Dockerfile</h3>
+
+Create a file named `Dockerfile` in your project root:
+
+```dockerfile
+# Use an official Node.js runtime as the base image
+FROM node:22-alpine
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install application dependencies
+RUN npm install
+
+# Copy the application source code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run the app
+CMD [ "node", "app.js" ]
+```
+
+Let's break down this Dockerfile:
+
+- `FROM node:22-alpine`: Specifies the base image with Node.js 22 pre-installed.
+- `WORKDIR /usr/src/app`: Sets the working directory inside the container.
+- `COPY package*.json ./`: Copies package.json and package-lock.json (if present) to the working directory.
+- `RUN npm install`: Installs the application dependencies.
+- `COPY . .`: Copies the rest of the application source code.
+- `EXPOSE 3000`: Informs Docker that the container listens on port 3000 at runtime.
+- `CMD [ "node", "app.js" ]`: Specifies the command to run the application.
+
+<h3 id="build-docker-image">Step 4: Build the Docker Image</h3>
+
+Build your Docker image:
+
+```bash
+docker build -t nodejs-docker-app .
+```
+
+This command builds a Docker image tagged as "nodejs-docker-app" based on your Dockerfile.
+
+<h3 id="run-docker-container">Step 5: Run the Docker Container</h3>
+
+Now, run your Docker container:
+
+```bash
+docker run -p 3000:3000 nodejs-docker-app
+```
+
+This command runs the container and maps port 3000 of the container to port 3000 on your host machine.
+
+<Callout type="success">
+  Your Node.js application is now running inside a Docker container! You can access it at http://localhost:3000.
+</Callout>
+
+<h2 id="advanced-docker-techniques">Advanced Docker Techniques for Node.js</h2>
+
+<h3 id="using-docker-compose">Using Docker Compose</h3>
+For more complex Node.js applications, especially those with multiple services (e.g., a database), Docker Compose is
+invaluable. Create a `docker-compose.yml` file:
+
+```yaml
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+  db:
+    image: mongo
+    ports:
+      - '27017:27017'
+```
+
+This setup defines two services: your Node.js app and a MongoDB database.
+
+<h3 id="optimizing-nodejs-docker-images">Optimizing Node.js Docker Images</h3>
+
+1. **Use the official Node.js Alpine image** for a smaller footprint:
+
+   ```dockerfile
+   FROM node:22-alpine-alpine
+   ```
+
+2. **Leverage Docker layer caching** by moving `COPY . .` after `npm install`:
+
+   ```dockerfile
+   COPY package*.json ./
+   RUN npm install
+   COPY . .
+   ```
+
+3. **Use multi-stage builds** to create smaller production images:
+
+   ```dockerfile
+   # Build stage
+   FROM node:22-alpine AS build
+   WORKDIR /usr/src/app
+   COPY package*.json ./
+   RUN npm install
+   COPY . .
+   RUN npm run build
+
+   # Production stage
+   FROM node:22-alpine-alpine
+   WORKDIR /usr/src/app
+   COPY --from=build /usr/src/app/dist ./dist
+   COPY package*.json ./
+   RUN npm install --only=production
+   CMD [ "node", "dist/app.js" ]
+   ```
+
+<h3 id="best-practices-for-nodejs-dockerization">Best Practices for Node.js Dockerization</h3>
+
+1. **Use .dockerignore**: Create a `.dockerignore` file to exclude unnecessary files (like `node_modules`) from the Docker context.
+
+2. **Handle SIGINT and SIGTERM signals** in your Node.js application for graceful shutdowns:
+
+   ```javascript
+   process.on('SIGINT', () => {
+     console.log('Gracefully shutting down from SIGINT (Ctrl-C)');
+     // Perform cleanup operations here
+     process.exit(0);
+   });
+   ```
+
+3. **Use environment variables** for configuration:
+
+   ```javascript
+   const PORT = process.env.PORT || 3000;
+   ```
+
+4. **Implement health checks** in your Dockerfile:
+
+   ```dockerfile
+   HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+     CMD node healthcheck.js
+   ```
+
+5. **Use Docker secrets** for sensitive information like API keys.
+
+<h2 id="conclusion">Conclusion</h2>
+
+Dockerizing Node.js applications offers numerous benefits in terms of consistency, scalability, and ease of deployment. By following the steps and best practices outlined in this guide, you can effectively containerize your Node.js applications and leverage the full power of Docker in your development workflow.
+
+Remember, containerization is just the beginning. As you become more comfortable with Docker and Node.js, explore topics like container orchestration with Kubernetes, continuous integration/continuous deployment (CI/CD) pipelines, and microservices architecture to take your Node.js applications to the next level.

@@ -43,38 +43,31 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
     };
   }, [headings]);
 
+  const handleScroll = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <nav className="rounded-lg bg-white p-6 dark:bg-gray-800">
-      <h2 className="mb-6 text-2xl font-bold text-gray-800 dark:text-gray-200">Table of Contents</h2>
-      <ul className="space-y-3">
+    <nav className="rounded-lg p-4">
+      <h2 className="mb-4 text-xl font-semibold">Table of Contents</h2>
+      <ul>
         {headings.map((heading) => (
           <motion.li
             key={heading.id}
-            className={`ml-${(heading.level - 2) * 4}`}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            className={`ml-${(heading.level - 2) * 4} text-white/50 transition-colors duration-200`}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Link href={`#${heading.id}`} className="group flex items-center">
-              <motion.span
-                className={`mr-2 h-6 w-1 rounded-full ${
-                  activeId === heading.id ? 'bg-teal-500' : 'bg-gray-300 group-hover:bg-teal-300 dark:bg-gray-600'
-                }`}
-                initial={false}
-                animate={{
-                  height: activeId === heading.id ? 24 : 16,
-                }}
-                transition={{ duration: 0.2 }}
-              />
-              <span
-                className={`transition-colors duration-200 ${
-                  activeId === heading.id
-                    ? 'font-bold text-teal-500 dark:text-teal-400'
-                    : 'text-gray-600 group-hover:text-teal-400 dark:text-gray-400 dark:group-hover:text-teal-300'
-                }`}
-              >
-                {heading.text}
-              </span>
+            <Link
+              href={`#${heading.id}`}
+              onClick={() => handleScroll(heading.id)}
+              className={`block rounded p-1 ${activeId === heading.id ? 'text-teal-300' : 'hover:text-teal-500'}`}
+            >
+              <span className={`font-medium ${activeId === heading.id ? 'font-bold' : ''}`}>{heading.text}</span>
             </Link>
           </motion.li>
         ))}

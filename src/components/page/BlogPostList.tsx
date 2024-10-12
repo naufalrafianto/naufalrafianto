@@ -1,30 +1,30 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
-import { Reveal } from '@/components/animation/Reveal';
-import { CustomLink } from '@/components/common/CustomLink';
-import { Heading } from '@/components/common/Heading';
-import { ProjectCard } from '@/components/feature/ProjectCard';
-import { ChevronLeftIcon } from '@radix-ui/react-icons';
-import { Post } from '@/lib/portfolio';
+import { BlogPost } from '@/types/blog';
+import { BlogPostCard } from '@/components/feature/BlogPostCard';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 import { FadeUp } from '../animation/FadeUp';
+import { ChevronLeftIcon } from '@radix-ui/react-icons';
+import { CustomLink } from '../common/CustomLink';
+import { Reveal } from '../animation/Reveal';
+import { Heading } from '../common/Heading';
 import SortDropdown from '../common/SortButton';
 import FilterTag from '../common/FilterButton';
 
-interface PortfolioPageProps {
-  initialPosts: Post[];
+interface BlogPostListProps {
+  initialPosts: BlogPost[];
+  lang: string;
 }
 
 type SortOption = 'date' | 'title';
 
-const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
+export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState(initialPosts);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('date');
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const filter = searchParams.get('filter');
@@ -33,7 +33,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
       setActiveFilter(filter);
       setPosts(
         sortPosts(
-          initialPosts.filter((post) => post.metadata.stack?.includes(filter)),
+          initialPosts.filter((post) => post.metadata.tags.includes(filter)),
           sort || 'date'
         )
       );
@@ -48,24 +48,23 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
 
   const handleTagClick = (tag: string) => {
     if (activeFilter === tag) {
-      router.push(`/portfolio?sort=${sortBy}`);
+      router.push(`/blog/${lang}?sort=${sortBy}`);
     } else {
-      router.push(`/portfolio?filter=${encodeURIComponent(tag)}&sort=${sortBy}`);
+      router.push(`/blog/${lang}?filter=${encodeURIComponent(tag)}&sort=${sortBy}`);
     }
   };
 
   const handleSortChange = (option: SortOption) => {
     setSortBy(option);
-    setIsOpen(false);
     const filter = searchParams.get('filter');
     if (filter) {
-      router.push(`/portfolio?filter=${encodeURIComponent(filter)}&sort=${option}`);
+      router.push(`/blog/${lang}?filter=${encodeURIComponent(filter)}&sort=${option}`);
     } else {
-      router.push(`/portfolio?sort=${option}`);
+      router.push(`/blog/${lang}?sort=${option}`);
     }
   };
 
-  const sortPosts = (postsToSort: Post[], sortOption: SortOption): Post[] => {
+  const sortPosts = (postsToSort: BlogPost[], sortOption: SortOption): BlogPost[] => {
     return [...postsToSort].sort((a, b) => {
       if (sortOption === 'date') {
         return new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime();
@@ -86,12 +85,12 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
       <div className="mb-12 flex w-full flex-col items-center">
         <Reveal>
           <Heading variant="gradient" className="mb-4 text-center text-3xl font-bold sm:text-4xl">
-            Recent Projects
+            Blog Posts
           </Heading>
         </Reveal>
         <Reveal>
           <p className="mx-auto mb-6 max-w-2xl text-center text-gray-400">
-            Explore a selection of my recent work, showcasing a range of web development projects and applications.
+            Explore my thoughts and insights on web development, technology, and more.
           </p>
         </Reveal>
       </div>
@@ -100,26 +99,15 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
         <SortDropdown options={['date', 'title']} currentSort={sortBy} onSortChange={handleSortChange} />
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <Suspense fallback={<div>Loading projects...</div>}>
+        <Suspense fallback={<div>Loading blog posts...</div>}>
           {posts.map((post) => (
-            <ProjectCard
-              key={post.slug}
-              title={post.metadata.title}
-              description={post.metadata.desc}
-              dates={post.metadata.date}
-              tags={post.metadata.stack as string[]}
-              image={post.metadata.thumbnail}
-              slug={post.slug}
-              onTagClick={handleTagClick}
-            />
+            <BlogPostCard key={post.slug} post={post} onTagClick={handleTagClick} lang={lang} />
           ))}
         </Suspense>
       </div>
       {posts.length === 0 && (
-        <p className="mt-8 text-center text-gray-400">No projects found with the selected technology.</p>
+        <p className="mt-8 text-center text-gray-400">No blog posts found with the selected tag.</p>
       )}
     </main>
   );
-};
-
-export default PortfolioPage;
+}

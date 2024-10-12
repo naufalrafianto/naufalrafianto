@@ -4,13 +4,11 @@ import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypePrettyCode from 'rehype-pretty-code';
 import remarkGfm from 'remark-gfm';
-import { BlogPost, BlogPostMetadata, HeadingInfo, blogConfig } from '@/types/blog';
 import { FadeUp } from '@/components/animation/FadeUp';
 import { Reveal } from '@/components/animation/Reveal';
 import { Callout } from '@/components/common/Callout';
 import { CloudImg } from '@/components/common/CloudImg';
 import { TechIcon } from '@/components/feature/TechIcon';
-import { CustomLink } from '@/components/common/CustomLink';
 import {
   CTAButton,
   Challenges,
@@ -30,6 +28,39 @@ import {
   FaUserFriends,
 } from 'react-icons/fa';
 
+interface PortfolioMetadata {
+  title: string;
+  desc: string;
+  date: string;
+  demo?: string;
+  repository?: string;
+  thumbnail: string;
+  slug: string;
+  tags: string[];
+  stack?: string[];
+}
+
+interface HeadingInfo {
+  text: string;
+  id: string;
+  level: number;
+}
+
+export interface Post {
+  content: React.ReactElement;
+  metadata: PortfolioMetadata;
+  slug: string;
+  headings: HeadingInfo[];
+  previousPost?: { title: string; slug: string } | null;
+  nextPost?: { title: string; slug: string } | null;
+}
+function getPortfolioDirectories(dir: string): string[] {
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
+}
+
 function extractHeadings(content: string): HeadingInfo[] {
   const headingRegex = /<h([1-6])\s+id="([^"]+)"[^>]*>(.*?)<\/h[1-6]>/g;
   const headings: HeadingInfo[] = [];
@@ -46,22 +77,15 @@ function extractHeadings(content: string): HeadingInfo[] {
   return headings;
 }
 
-export async function getBlogPostData(slug: string, locale: string): Promise<BlogPost | null> {
-  const filePath = path.join(process.cwd(), 'src', 'content', 'blog', locale, `${slug}.mdx`);
+async function getPostData(slug: string): Promise<Post | null> {
+  const filePath = path.join(process.cwd(), 'src', 'content', 'portfolio', slug, 'page.mdx');
   if (!fs.existsSync(filePath)) {
     return null;
   }
 
   const source = fs.readFileSync(filePath, 'utf-8');
   const { content, data } = matter(source);
-  const metadata = {
-    ...data,
-    date: new Date(data.date).toISOString(),
-    author: data.author || blogConfig.defaultAuthor,
-    ogImage: data.ogImage || blogConfig.defaultOgImage,
-    slug,
-    locale,
-  } as BlogPostMetadata;
+  const metadata = data as PortfolioMetadata;
   const headings = extractHeadings(content);
 
   const mdxContent = await MDXRemote({
@@ -85,7 +109,6 @@ export async function getBlogPostData(slug: string, locale: string): Promise<Blo
     },
     components: {
       Callout,
-      CustomLink,
       FadeUp,
       CloudImg,
       Reveal,
@@ -117,46 +140,41 @@ export async function getBlogPostData(slug: string, locale: string): Promise<Blo
   };
 }
 
-export async function getAllBlogPosts(locale: string): Promise<BlogPost[]> {
-  if (!locale) {
-    console.error('Locale is undefined in getAllBlogPosts');
-    return [];
-  }
-
-  const blogDir = path.join(process.cwd(), 'src', 'content', 'blog', locale);
-
-  if (!fs.existsSync(blogDir)) {
-    console.error(`Blog directory not found for locale: ${locale}`);
-    return [];
-  }
-
-  const blogFiles = fs.readdirSync(blogDir).filter((file) => file.endsWith('.mdx'));
-
+export async function getAllPosts(): Promise<Post[]> {
+  const portfolioDir = path.join(process.cwd(), 'src', 'content', 'portfolio');
+  const portfolioDirs = getPortfolioDirectories(portfolioDir);
   const posts = await Promise.all(
-    blogFiles.map(async (file) => {
-      const filePath = path.join(blogDir, file);
-      const source = fs.readFileSync(filePath, 'utf8');
-      const { data, content } = matter(source);
-      const slug = file.replace(/\.mdx$/, '');
-
-      const metadata: BlogPostMetadata = {
-        ...data,
-        date: new Date(data.date).toISOString(),
-        slug,
-        locale,
-      } as BlogPostMetadata;
-
-      return {
-        content,
-        metadata,
-        slug,
-      } as BlogPost;
+    portfolioDirs.map(async (dir) => {
+      const slug = dir;
+      return getPostData(slug);
     })
   );
-
-  return posts.sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+  return posts.filter((post): post is NonNullable<typeof post> => post !== null);
 }
 
-export function tagBlogPosts(posts: BlogPost[], ...tags: string[]): BlogPost[] {
+export async function getPost(slug: string): Promise<Post | null> {
+  const allPosts = await getAllPosts();
+  const postIndex = allPosts.findIndex((post) => post.slug === slug);
+
+  if (postIndex === -1) {
+    return null;
+  }
+
+  const currentPost = allPosts[postIndex];
+  const previousPost = postIndex > 0 ? allPosts[postIndex - 1] : null;
+  const nextPost = postIndex < allPosts.length - 1 ? allPosts[postIndex + 1] : null;
+
+  return {
+    ...currentPost,
+    previousPost: previousPost ? { title: previousPost.metadata.title, slug: previousPost.slug } : null,
+    nextPost: nextPost ? { title: nextPost.metadata.title, slug: nextPost.slug } : null,
+  };
+}
+
+export async function getBlogPosts(): Promise<Post[]> {
+  return getAllPosts();
+}
+
+export function tag(posts: Post[], ...tags: string[]): Post[] {
   return posts.filter((post) => tags.every((tag) => post.metadata.tags.includes(tag)));
 }

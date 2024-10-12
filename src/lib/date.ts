@@ -29,7 +29,7 @@ export function formatDate(date: string | Date): string {
   const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
   const fullDate = new Date(dateString).toLocaleString('en-us', {
-    month: 'long',
+    month: 'short',
     day: 'numeric',
     year: 'numeric',
   });

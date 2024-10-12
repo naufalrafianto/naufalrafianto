@@ -83,10 +83,6 @@ blockquote {
   @apply max-w-none;
 }
 
-.prose a {
-  @apply text-teal-600 no-underline hover:underline dark:text-teal-400;
-}
-
 .prose blockquote {
   @apply my-4 border-l-4 border-teal-500 bg-teal-50 bg-opacity-50 px-4 py-2 dark:bg-teal-900 dark:bg-opacity-20;
 }

@@ -1,5 +1,5 @@
 import PortfolioPage from '@/components/page/PortfolioList';
-import { getBlogPosts } from '@/lib/blog';
+import { getBlogPosts } from '@/lib/portfolio';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 

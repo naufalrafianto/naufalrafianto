@@ -92,6 +92,9 @@ export default function NavMenu() {
           <MagneticEffect>
             <NavMenuLink title={'Portfolio'} active={active} duration={1.2} />
           </MagneticEffect>
+          <MagneticEffect>
+            <NavMenuLink title={'Blog'} active={active} duration={1.2} />
+          </MagneticEffect>
         </div>
         <div>
           <NavMenuLine title={'Links'} />
