@@ -1,36 +1,41 @@
-// src/lib/readingTime.ts
+import { visit } from 'unist-util-visit';
+import { Node } from 'unist';
+import { VFile } from 'vfile';
 
-import React from 'react';
-
-export function estimateReadingTime(content: string | React.ReactElement): number {
-  let text: string;
-
-  if (typeof content === 'string') {
-    text = content;
-  } else if (React.isValidElement(content)) {
-    // If it's a React element, try to extract text from it
-    text = extractTextFromReactElement(content);
-  } else {
-    console.error('Invalid content type passed to estimateReadingTime');
-    return 0;
-  }
-
-  // Estimate reading time (assuming 200 words per minute)
-  const wordsPerMinute = 200;
-  const wordCount = text.split(/\s+/).length;
-  const readingTime = Math.ceil(wordCount / wordsPerMinute);
-
-  return readingTime;
+interface ReadingTimeData {
+  text: string;
+  time: number;
+  words: number;
+  minutes: number;
 }
 
-function extractTextFromReactElement(element: React.ReactElement): string {
-  let text = '';
-  React.Children.forEach(element.props.children, (child) => {
-    if (typeof child === 'string') {
-      text += child + ' ';
-    } else if (React.isValidElement(child)) {
-      text += extractTextFromReactElement(child) + ' ';
-    }
-  });
-  return text.trim();
+interface TextNode extends Node {
+  type: 'text';
+  value: string;
+}
+
+const WORDS_PER_MINUTE = 200;
+
+function getReadingTime(text: string): ReadingTimeData {
+  const words = text.trim().split(/\s+/).length;
+  const time = Math.ceil(words / WORDS_PER_MINUTE);
+  return {
+    text: `${time} min read`,
+    time,
+    words,
+    minutes: time,
+  };
+}
+
+export default function remarkReadingTime() {
+  return (tree: Node, file: VFile) => {
+    let textContent = '';
+
+    visit(tree, 'text', (node: TextNode) => {
+      textContent += node.value;
+    });
+
+    const readingTimeData = getReadingTime(textContent);
+    file.data.readingTime = readingTimeData;
+  };
 }

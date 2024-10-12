@@ -19,6 +19,12 @@ export interface BlogPostMetadata {
   slug: string;
   locale: string;
   translatedFilename: string;
+  readingTime?: {
+    text: string;
+    time: number;
+    words: number;
+    minutes: number;
+  };
 }
 
 export interface BlogPost {
@@ -30,7 +36,7 @@ export interface BlogPost {
   nextPost?: { title: string; slug: string } | null;
 }
 
-export interface HeadingInfo {
+interface HeadingInfo {
   text: string;
   id: string;
   level: number;

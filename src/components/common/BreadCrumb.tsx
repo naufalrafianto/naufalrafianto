@@ -8,11 +8,21 @@ const formatSegment = (segment: string) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 };
+
 const capitalize = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
 
 export const Breadcrumb = () => {
   const pathname = usePathname();
   const pathArray = pathname.split('/').filter(Boolean);
+
+  // Remove 'en' if it comes after 'blog'
+  const processedPathArray = pathArray.reduce<string[]>((acc, segment, index) => {
+    if ((segment === 'en' || segment === 'id') && pathArray[index - 1] === 'blog') {
+      return acc;
+    }
+    acc.push(segment);
+    return acc;
+  }, []); // The initial value is an empty array of strings.
 
   return (
     <nav aria-label="Breadcrumb">
@@ -22,9 +32,9 @@ export const Breadcrumb = () => {
             Home
           </Link>
         </li>
-        {pathArray.map((path, index) => {
-          const href = `/${pathArray.slice(0, index + 1).join('/')}`;
-          const isLast = index === pathArray.length - 1;
+        {processedPathArray.map((path, index) => {
+          const href = `/${processedPathArray.slice(0, index + 1).join('/')}`;
+          const isLast = index === processedPathArray.length - 1;
 
           return (
             <li key={index} className="flex items-center">

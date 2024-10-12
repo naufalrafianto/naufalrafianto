@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
-import { Layout } from '@/components/layout';
 import NavMenu from '@/components/layout/Navbar/NavMenu';
 import { Footer } from '@/components/layout/Footer';
+import Template from '@/components/layout/Template';
 
 const font = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
@@ -66,10 +66,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <NavMenu />
-        <Layout>
+        <Template>
           {children}
           <Footer />
-        </Layout>
+        </Template>
       </body>
     </html>
   );

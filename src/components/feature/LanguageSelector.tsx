@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface LanguageSelectorProps {
   currentLang: string;
@@ -22,7 +23,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLang, slug }
           href={`/blog/${lang.code}/${slug}`}
           className={`flex items-center gap-2 rounded-md px-3 py-5 text-sm font-medium transition duration-200 ease-in-out ${currentLang === lang.code ? 'text-teal-600' : 'text-gray-600 hover:text-teal-600'} `}
         >
-          <img src={lang.flag} alt={lang.name} className="h-4 w-4" />
+          <Image width={10} height={10} src={lang.flag} alt={lang.name} className="h-4 w-4" />
           {lang.name}
         </Link>
       ))}

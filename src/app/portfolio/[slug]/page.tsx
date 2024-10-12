@@ -6,12 +6,11 @@ import { Suspense } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import { FaChrome } from 'react-icons/fa';
 import { Heading } from '@/components/common/Heading';
-import { Reveal } from '@/components/animation/Reveal';
 import { CloudImg } from '@/components/common/CloudImg';
-import { FadeUp } from '@/components/animation/FadeUp';
 import TableOfContents from '@/components/feature/TableofContent';
 import Link from 'next/link';
 import { Breadcrumb } from '@/components/common/BreadCrumb';
+import Animation from '@/components/animation';
 
 export async function generateMetadata({
   params,
@@ -91,11 +90,11 @@ export default async function PortfolioPost({
         }}
       />
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <FadeUp className="mb-8 inline-flex items-center">
+        <Animation.FadeUp className="mb-8 inline-flex items-center">
           <Breadcrumb />
-        </FadeUp>
+        </Animation.FadeUp>
 
-        <FadeUp delay={1} className="mb-8">
+        <Animation.FadeUp delay={1} className="mb-8">
           <CloudImg
             width={1000}
             height={500}
@@ -103,19 +102,19 @@ export default async function PortfolioPost({
             publicId={post.metadata?.thumbnail}
             className="w-full rounded-xl object-cover shadow-lg"
           />
-        </FadeUp>
+        </Animation.FadeUp>
 
-        <Reveal>
+        <Animation.Reveal>
           <Heading variant="gradient" className="mb-4 text-4xl sm:text-5xl">
             {post.metadata?.title}
           </Heading>
-        </Reveal>
+        </Animation.Reveal>
 
-        <Reveal>
+        <Animation.Reveal>
           <p className="mb-6 text-xl text-gray-600 dark:text-gray-300">{post.metadata?.desc}</p>
-        </Reveal>
+        </Animation.Reveal>
 
-        <Reveal className="mb-6 flex flex-wrap space-x-10">
+        <Animation.Reveal className="mb-6 flex flex-wrap space-x-10">
           <a
             href={post.metadata?.demo}
             className="inline-flex items-center rounded-full bg-teal-500 px-4 py-2 text-white transition-colors hover:bg-teal-600"
@@ -132,15 +131,15 @@ export default async function PortfolioPost({
               Repository
             </a>
           )}
-        </Reveal>
+        </Animation.Reveal>
 
-        <Reveal>
+        <Animation.Reveal>
           <Suspense fallback={<p className="h-5" />}>
             <p className="mb-8 text-sm text-gray-500 dark:text-gray-400">
               Published on {formatDate(post.metadata.date)}
             </p>
           </Suspense>
-        </Reveal>
+        </Animation.Reveal>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr,250px]">
           <article className="prose prose-lg max-w-none dark:prose-invert">{post.content}</article>

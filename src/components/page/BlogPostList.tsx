@@ -1,16 +1,14 @@
 'use client';
 
-import { BlogPost } from '@/types/blog';
-import { BlogPostCard } from '@/components/feature/BlogPostCard';
+import { BlogPost } from '@/constant/blog';
+import { BlogCard } from '@/components/feature/Card/BlogCard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { FadeUp } from '../animation/FadeUp';
-import { ChevronLeftIcon } from '@radix-ui/react-icons';
-import { CustomLink } from '../common/CustomLink';
-import { Reveal } from '../animation/Reveal';
 import { Heading } from '../common/Heading';
 import SortDropdown from '../common/SortButton';
 import FilterTag from '../common/FilterButton';
+import Animation from '../animation';
+import { Breadcrumb } from '../common/BreadCrumb';
 
 interface BlogPostListProps {
   initialPosts: BlogPost[];
@@ -76,23 +74,20 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
 
   return (
     <main className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <FadeUp className="mb-8 inline-flex items-center">
-        <ChevronLeftIcon className="mr-2 text-teal-500 dark:text-teal-400" />
-        <CustomLink href="/" className="text-teal-600 dark:text-teal-400">
-          Back to home
-        </CustomLink>
-      </FadeUp>
+      <Animation.FadeUp className="mb-8 inline-flex items-center">
+        <Breadcrumb />
+      </Animation.FadeUp>
       <div className="mb-12 flex w-full flex-col items-center">
-        <Reveal>
+        <Animation.Reveal>
           <Heading variant="gradient" className="mb-4 text-center text-3xl font-bold sm:text-4xl">
             Blog Posts
           </Heading>
-        </Reveal>
-        <Reveal>
+        </Animation.Reveal>
+        <Animation.Reveal>
           <p className="mx-auto mb-6 max-w-2xl text-center text-gray-400">
             Explore my thoughts and insights on web development, technology, and more.
           </p>
-        </Reveal>
+        </Animation.Reveal>
       </div>
       <div className="mb-8 flex items-center justify-between">
         {activeFilter && <FilterTag activeFilter={activeFilter} onRemove={() => handleTagClick(activeFilter)} />}
@@ -101,7 +96,7 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <Suspense fallback={<div>Loading blog posts...</div>}>
           {posts.map((post) => (
-            <BlogPostCard key={post.slug} post={post} onTagClick={handleTagClick} lang={lang} />
+            <BlogCard key={post.slug} post={post} onTagClick={handleTagClick} lang={lang} />
           ))}
         </Suspense>
       </div>

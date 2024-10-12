@@ -1,10 +1,10 @@
+import { BlogPost, BlogPostMetadata } from '@/constant/blog';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypePrettyCode from 'rehype-pretty-code';
 import remarkGfm from 'remark-gfm';
-import { BlogPost, BlogPostMetadata, HeadingInfo, blogConfig } from '@/types/blog';
 import { FadeUp } from '@/components/animation/FadeUp';
 import { Reveal } from '@/components/animation/Reveal';
 import { Callout } from '@/components/common/Callout';
@@ -29,6 +29,8 @@ import {
   FaUserCheck,
   FaUserFriends,
 } from 'react-icons/fa';
+import { blogConfig } from '@/constant/blog';
+import remarkReadingTime from './readingTime';
 
 function extractHeadings(content: string): HeadingInfo[] {
   const headingRegex = /<h([1-6])\s+id="([^"]+)"[^>]*>(.*?)<\/h[1-6]>/g;
@@ -68,7 +70,7 @@ export async function getBlogPostData(slug: string, locale: string): Promise<Blo
     source: content,
     options: {
       mdxOptions: {
-        remarkPlugins: [remarkGfm],
+        remarkPlugins: [remarkGfm, remarkReadingTime],
         rehypePlugins: [
           [
             rehypePrettyCode,
@@ -107,9 +109,14 @@ export async function getBlogPostData(slug: string, locale: string): Promise<Blo
     },
   });
 
+  const readingTime = mdxContent.props.readingTime;
+
   return {
     content: mdxContent,
-    metadata,
+    metadata: {
+      ...metadata,
+      readingTime,
+    },
     slug,
     headings,
     previousPost: null,

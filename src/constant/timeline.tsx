@@ -13,7 +13,7 @@ const timelineItems = [
   },
   {
     icon: <LaptopIcon />,
-    logo: '/logo/gnfi.png',
+    logo: '/image/logo/gnfi.png',
     date: '2024-05-01/present',
     title: 'Frontend Developer',
     company: 'Good News From Indonesia',
@@ -25,7 +25,7 @@ const timelineItems = [
   },
   {
     icon: <GrTest />,
-    logo: '/logo/mandiri.png',
+    logo: '/image/logo/mandiri.png',
     date: '2024-02-01/2024-07-31',
     title: 'Performance Test Engineer',
     company: 'PT Bank Mandiri (Persero) Tbk.',

@@ -8,8 +8,6 @@ coverImage: 'docker-beginners-guide-cover.jpg'
 translatedFilename: "getting-started-with-docker-a-beginner's-guide"
 ---
 
-# Memulai dengan Docker: Panduan untuk Pemula
-
 Docker telah merevolusi cara kita mengembangkan, mendistribusikan, dan menjalankan aplikasi. Dalam posting ini, kita akan menjelajahi apa itu Docker, mengapa berguna, dan bagaimana memulai dengan contoh sederhana.
 
 {' '}
@@ -130,94 +128,6 @@ Perintah ini menjalankan kontainer dan memetakan port 3000 dari kontainer ke por
 <Callout type="success">
   Aplikasi Node.js Anda sekarang berjalan di dalam kontainer Docker! Anda dapat mengaksesnya di http://localhost:3000.
 </Callout>
-
-<h2 id="teknik-docker-lanjutan-untuk-node.js">Teknik Docker Lanjutan untuk Node.js</h2>
-
-<h3 id="menggunakan-docker-compose">Menggunakan Docker Compose</h3>
-
-Untuk aplikasi Node.js yang lebih kompleks, terutama yang memiliki beberapa layanan (misalnya, database), Docker Compose sangat berharga. Buat file `docker-compose.yml`:
-
-```yaml
-version: '3'
-services:
-  app:
-    build: .
-    ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=production
-  db:
-    image: mongo
-    ports:
-      - '27017:27017'
-```
-
-Pengaturan ini mendefinisikan dua layanan: aplikasi Node.js Anda dan database MongoDB.
-
-<h3 id="mengoptimalkan-image-docker-node.js">Mengoptimalkan Image Docker Node.js</h3>
-
-1. **Gunakan image Node.js Alpine resmi** untuk ukuran yang lebih kecil:
-
-   ```dockerfile
-   FROM node:22-alpine-alpine
-   ```
-
-2. **Manfaatkan caching layer Docker** dengan memindahkan `COPY . .` setelah `npm install`:
-
-   ```dockerfile
-   COPY package*.json ./
-   RUN npm install
-   COPY . .
-   ```
-
-3. **Gunakan build multi-stage** untuk membuat image produksi yang lebih kecil:
-
-   ```dockerfile
-   # Tahap build
-   FROM node:22-alpine AS build
-   WORKDIR /usr/src/app
-   COPY package*.json ./
-   RUN npm install
-   COPY . .
-   RUN npm run build
-
-   # Tahap produksi
-   FROM node:22-alpine-alpine
-   WORKDIR /usr/src/app
-   COPY --from=build /usr/src/app/dist ./dist
-   COPY package*.json ./
-   RUN npm install --only=production
-   CMD [ "node", "dist/app.js" ]
-   ```
-
-<h3 id="praktik-terbaik-untuk-dockerisasi-node.js">Praktik Terbaik untuk Dockerisasi Node.js</h3>
-
-1. **Gunakan .dockerignore**: Buat file `.dockerignore` untuk mengecualikan file yang tidak perlu (seperti `node_modules`) dari konteks Docker.
-
-2. **Tangani sinyal SIGINT dan SIGTERM** di aplikasi Node.js Anda untuk penghentian yang baik:
-
-   ```javascript
-   process.on('SIGINT', () => {
-     console.log('Mematikan dengan baik dari SIGINT (Ctrl-C)');
-     // Lakukan operasi pembersihan di sini
-     process.exit(0);
-   });
-   ```
-
-3. **Gunakan variabel lingkungan** untuk konfigurasi:
-
-   ```javascript
-   const PORT = process.env.PORT || 3000;
-   ```
-
-4. **Implementasikan pemeriksaan kesehatan** di Dockerfile Anda:
-
-   ```dockerfile
-   HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-     CMD node healthcheck.js
-   ```
-
-5. **Gunakan Docker secrets** untuk informasi sensitif seperti kunci API.
 
 ## Kesimpulan
 

@@ -8,10 +8,9 @@ import { BackgroundGradientAnimation } from '../layout/GradientBackground';
 import { cn } from '@/lib/cn';
 import { useNowPlaying } from '@/lib/spotify';
 import dynamic from 'next/dynamic';
-import { FadeUp } from '../animation/FadeUp';
 import { IconGroup } from '../feature/IconGroup';
 import { NameAnimationHome } from '../feature/NameAnimationHome';
-import { Reveal } from '../animation/Reveal';
+import Animation from '../animation';
 
 const NowPlayingComponent = dynamic(() => import('../feature/SpotifyComponent/NowPlayingComponent'), { ssr: false });
 
@@ -21,24 +20,24 @@ export const HomePage = () => {
   const { nowPlaying } = useNowPlaying();
 
   return (
-    <section className="z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center gap-y-4 py-4">
-      <FadeUp className="z-10">
+    <section className="mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center gap-y-4 py-4">
+      <Animation.FadeUp>
         <Image
           src={'/image/profile-pict.png'}
           width={160}
           height={160}
           alt="profilepic"
-          className="z-10 mt-2 rounded-full border-2 border-slate-400"
+          className="mt-2 rounded-full border-2 border-slate-400"
           priority
         />
-      </FadeUp>
+      </Animation.FadeUp>
       <IconGroup icons={icons} />
       <NameAnimationHome />
-      <Reveal className="-mt-5 mb-10 px-10 text-center text-xl tracking-tight text-slate-400 md:px-20 lg:px-60 lg:text-3xl">
+      <Animation.Reveal className="-mt-5 mb-10 px-10 text-center text-xl tracking-tight text-slate-400 md:px-20 lg:px-60 lg:text-3xl">
         I am <span className="border-b font-medium text-slate-200">Naufal </span>
         {age} years old based on <span className="border-b font-medium text-slate-200"> Indonesia </span>and working as
         an freelance Full Stack Software Developer.
-      </Reveal>
+      </Animation.Reveal>
       <BentoGrid>
         {/* ==== NOW PLAYING BOX */}
         <BentoGridComponent
@@ -75,7 +74,7 @@ export const HomePage = () => {
         </BentoGridComponent>
 
         {/* ==== Blog BOX */}
-        <BentoGridComponent href="/blog/en" className="col-span-1 xl:row-span-4">
+        <BentoGridComponent href="/blog" className="col-span-1 xl:row-span-4">
           <BackgroundGradientAnimation>
             <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center px-4 text-center text-3xl font-bold text-white md:text-4xl lg:text-7xl"></div>
           </BackgroundGradientAnimation>

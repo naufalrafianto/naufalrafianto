@@ -1,7 +1,6 @@
-import PortfolioPage from '@/components/page/PortfolioList';
+import PortfolioPageComponent from '@/components/page/PortfolioPage';
 import { getBlogPosts } from '@/lib/portfolio';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -10,9 +9,5 @@ export const metadata: Metadata = {
 export default async function Page() {
   const posts = await getBlogPosts();
 
-  return (
-    <Suspense fallback={<div>Loading portfolio...</div>}>
-      <PortfolioPage initialPosts={posts} />
-    </Suspense>
-  );
+  return <PortfolioPageComponent initialPosts={posts} />;
 }

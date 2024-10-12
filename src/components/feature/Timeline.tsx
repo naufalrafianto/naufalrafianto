@@ -4,6 +4,7 @@ import { Reveal } from '../animation/Reveal';
 import { CustomLink } from '../common/CustomLink';
 import { formatTimeDifference } from '@/lib/date';
 import { cn } from '@/lib/cn';
+import Image from 'next/image';
 
 const Timeline: React.FC = () => {
   const timelineItems = useTimelineItems();
@@ -29,7 +30,13 @@ const Timeline: React.FC = () => {
             <li key={index} className="relative pl-10">
               <div className="absolute left-[-20px] top-0 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-700 bg-gray-800">
                 {item.logo ? (
-                  <img className="h-10 w-10 rounded-full object-cover" src={item.logo} alt={item.company} />
+                  <Image
+                    height={100}
+                    width={100}
+                    className="h-10 w-10 rounded-full object-cover"
+                    src={item.logo}
+                    alt={item.company}
+                  />
                 ) : (
                   <span className="text-white">{item.icon}</span>
                 )}

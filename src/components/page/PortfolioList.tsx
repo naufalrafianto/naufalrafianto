@@ -1,24 +1,21 @@
 'use client';
 
 import React, { Suspense, useEffect, useState } from 'react';
-import { Reveal } from '@/components/animation/Reveal';
-import { CustomLink } from '@/components/common/CustomLink';
 import { Heading } from '@/components/common/Heading';
-import { ProjectCard } from '@/components/feature/ProjectCard';
-import { ChevronLeftIcon } from '@radix-ui/react-icons';
-import { Post } from '@/lib/portfolio';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FadeUp } from '../animation/FadeUp';
 import SortDropdown from '../common/SortButton';
 import FilterTag from '../common/FilterButton';
+import Animation from '../animation';
+import { ProjectCard } from '../feature/Card/ProjectCard';
+import { Breadcrumb } from '../common/BreadCrumb';
 
-interface PortfolioPageProps {
+interface PortfolioListProps {
   initialPosts: Post[];
 }
 
 type SortOption = 'date' | 'title';
 
-const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
+const PortfolioList: React.FC<PortfolioListProps> = ({ initialPosts }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState(initialPosts);
@@ -77,23 +74,20 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
 
   return (
     <main className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <FadeUp className="mb-8 inline-flex items-center">
-        <ChevronLeftIcon className="mr-2 text-teal-500 dark:text-teal-400" />
-        <CustomLink href="/" className="text-teal-600 dark:text-teal-400">
-          Back to home
-        </CustomLink>
-      </FadeUp>
+      <Animation.FadeUp className="mb-8 inline-flex items-center">
+        <Breadcrumb />
+      </Animation.FadeUp>
       <div className="mb-12 flex w-full flex-col items-center">
-        <Reveal>
+        <Animation.Reveal>
           <Heading variant="gradient" className="mb-4 text-center text-3xl font-bold sm:text-4xl">
             Recent Projects
           </Heading>
-        </Reveal>
-        <Reveal>
+        </Animation.Reveal>
+        <Animation.Reveal>
           <p className="mx-auto mb-6 max-w-2xl text-center text-gray-400">
             Explore a selection of my recent work, showcasing a range of web development projects and applications.
           </p>
-        </Reveal>
+        </Animation.Reveal>
       </div>
       <div className="mb-8 flex items-center justify-between">
         {activeFilter && <FilterTag activeFilter={activeFilter} onRemove={() => handleTagClick(activeFilter)} />}
@@ -122,4 +116,4 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
   );
 };
 
-export default PortfolioPage;
+export default PortfolioList;

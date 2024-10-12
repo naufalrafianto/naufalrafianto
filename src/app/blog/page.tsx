@@ -1,6 +1,5 @@
-import { BlogPostList } from '@/components/page/BlogPostList';
+import BlogPageComponent from '@/components/page/BlogPage';
 import { getAllBlogPosts } from '@/lib/blog';
-import { Suspense } from 'react';
 
 export const metadata = {
   title: 'Blog',
@@ -10,11 +9,7 @@ export const metadata = {
 export default async function BlogPage() {
   const posts = await getAllBlogPosts('en');
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BlogPostList initialPosts={posts} lang={'en'} />
-    </Suspense>
-  );
+  return <BlogPageComponent initialPosts={posts} lang={'en'} />;
 }
 
 export async function generateStaticParams() {
