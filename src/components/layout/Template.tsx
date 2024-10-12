@@ -32,6 +32,7 @@ export default function Template({ children, className }: { children: React.Reac
             <div id="banner-2" className="fixed left-1/4 top-0 z-50 min-h-screen w-1/4 bg-teal-300" />
             <div id="banner-3" className="fixed left-2/4 top-0 z-50 min-h-screen w-1/4 bg-teal-300" />
             <div id="banner-4" className="fixed left-3/4 top-0 z-50 min-h-screen w-1/4 bg-teal-300" />
+
             {children}
           </div>
         </div>

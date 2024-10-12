@@ -9,6 +9,7 @@ import TableOfContents from '@/components/feature/TableofContent';
 import { Breadcrumb } from '@/components/common/BreadCrumb';
 import LanguageSelector from '@/components/feature/LanguageSelector';
 import EstimatedReadTime from '@/components/feature/ReadTime';
+import GiscusComments from '@/components/feature/Giscus';
 
 export default async function BlogPostPage({ params }: { params: { lang: string; slug: string } }) {
   const post = await getBlogPostData(params.slug, params.lang);
@@ -70,6 +71,7 @@ export default async function BlogPostPage({ params }: { params: { lang: string;
           </Link>
         )}
       </nav>
+      <GiscusComments />
     </article>
   );
 }
