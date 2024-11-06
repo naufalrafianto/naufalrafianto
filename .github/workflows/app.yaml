@@ -39,3 +39,30 @@ jobs:
         run: |
           docker tag naufalrafianto:latest ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
+
+      # Step 7: Deploy to VPS
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            # Pull the latest image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
+
+            # Stop and remove the existing container if it exists
+            docker stop naufalrafianto || true
+            docker rm naufalrafianto || true
+
+            # Create .env file on VPS
+            echo "${{ secrets.ENV_FILE }}" > .env
+
+            # Run the new container
+            docker run -d \
+              --name naufalrafianto \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              --env-file .env \
+              ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
