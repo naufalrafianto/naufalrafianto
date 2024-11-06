@@ -1,26 +1,38 @@
-import { CurrentlyPlayingData, TrackData } from '@/types/spotify';
+import { CurrentlyPlayingData } from '@/types/spotify';
 import useSWR from 'swr';
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export const useNowPlaying = () => {
-  const fetcher = (url: string): Promise<CurrentlyPlayingData> =>
-    fetch(url).then((res) => res.json() as Promise<CurrentlyPlayingData>);
-  const { data, error } = useSWR<CurrentlyPlayingData>('/api/spotify?type=now-playing', fetcher);
+  const { data, error, mutate } = useSWR<CurrentlyPlayingData>('/api/spotify?type=now-playing', fetcher, {
+    refreshInterval: 30000, // Refresh every 30 seconds
+    revalidateOnFocus: false,
+    dedupingInterval: 30000,
+  });
 
   return {
     nowPlaying: data,
     isLoading: !error && !data,
     isError: error,
+    mutate,
   };
 };
 
-export const useTopTracks = () => {
-  const fetcher = (url: string): Promise<TrackData[]> => fetch(url).then((res) => res.json() as Promise<TrackData[]>);
+// export const useTopTracks = () => {
+//   const { data, error, mutate } = useSWR<TrackData[]>(
+//     '/api/spotify?type=top-tracks',
+//     fetcher,
+//     {
+//       refreshInterval: 3600000, // Refresh every hour
+//       revalidateOnFocus: false,
+//       dedupingInterval: 3600000,
+//     }
+//   );
 
-  const { data, error } = useSWR('/api/spotify?type=top-tracks', fetcher);
-
-  return {
-    topTracks: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-};
+//   return {
+//     topTracks: data,
+//     isLoading: !error && !data,
+//     isError: error,
+//     mutate,
+//   };
+// };

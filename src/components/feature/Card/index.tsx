@@ -34,10 +34,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
   const remainingTagsCount = tags.length - 2;
 
   return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className="overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:shadow-md dark:bg-gray-900"
-    >
+    <motion.div whileHover={{ y: -5 }} className="overflow-hidden rounded-lg transition-all duration-300 ease-out">
       <div className="block">
         {image && (
           <div className="relative h-40 overflow-hidden">

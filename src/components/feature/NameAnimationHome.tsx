@@ -41,7 +41,7 @@ export const NameAnimationHome = () => {
   return (
     <div className="col-start-1 md:row-start-1" data-speed=".1" ref={component}>
       <h1
-        className="mb-8 whitespace-nowrap text-[clamp(3rem,5vmin,4rem)] font-extrabold leading-[1] tracking-tighter max-lg:flex max-lg:flex-col max-lg:items-center"
+        className="mb-8 whitespace-nowrap text-[clamp(4rem,6vmin,8rem)] font-extrabold leading-[1] tracking-tighter max-lg:flex max-lg:flex-col max-lg:items-center"
         aria-label={primary.first_name + ' ' + primary.last_name}
       >
         <span className="text-slate-500/50">{renderLetters(primary.first_name, 'first')} </span>

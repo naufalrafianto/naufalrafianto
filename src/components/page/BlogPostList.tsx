@@ -46,9 +46,9 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
 
   const handleTagClick = (tag: string) => {
     if (activeFilter === tag) {
-      router.push(`/blog/${lang}?sort=${sortBy}`);
+      router.push(`/blog?sort=${sortBy}`);
     } else {
-      router.push(`/blog/${lang}?filter=${encodeURIComponent(tag)}&sort=${sortBy}`);
+      router.push(`/blog?filter=${encodeURIComponent(tag)}&sort=${sortBy}`);
     }
   };
 
@@ -56,9 +56,9 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
     setSortBy(option);
     const filter = searchParams.get('filter');
     if (filter) {
-      router.push(`/blog/${lang}?filter=${encodeURIComponent(filter)}&sort=${option}`);
+      router.push(`/blog?filter=${encodeURIComponent(filter)}&sort=${option}`);
     } else {
-      router.push(`/blog/${lang}?sort=${option}`);
+      router.push(`/blog?sort=${option}`);
     }
   };
 

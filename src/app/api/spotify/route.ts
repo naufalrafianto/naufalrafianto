@@ -1,10 +1,18 @@
 import axios from 'axios';
 import querystring from 'querystring';
 import { NextRequest, NextResponse } from 'next/server';
+import { Redis } from '@upstash/redis';
 import { CurrentlyPlayingData, CurrentlyPlayingResponse, TopTracksResponse, TrackData } from '@/types/spotify';
 import { NOW_PLAYING_ENDPOINT, TOKEN_ENDPOINT, TOP_TRACKS_ENDPOINT, refresh_token, token } from '@/constant';
 
+const redis = Redis.fromEnv();
+
 const getAccessToken = async (): Promise<string> => {
+  const cachedToken = await redis.get<string>('spotify_access_token');
+  if (cachedToken) {
+    return cachedToken;
+  }
+
   const res = await axios.post<{ access_token: string }>(
     TOKEN_ENDPOINT,
     querystring.stringify({
@@ -19,30 +27,41 @@ const getAccessToken = async (): Promise<string> => {
     }
   );
 
+  await redis.set('spotify_access_token', res.data.access_token, { ex: 3600 }); // Cache for 1 hour
   return res.data.access_token;
 };
 
 const getNowPlaying = async (): Promise<CurrentlyPlayingResponse> => {
-  const access_token = await getAccessToken();
+  const cachedNowPlaying = await redis.get<CurrentlyPlayingResponse>('spotify_now_playing');
+  if (cachedNowPlaying) {
+    return cachedNowPlaying;
+  }
 
+  const access_token = await getAccessToken();
   const res = await axios.get<CurrentlyPlayingResponse>(NOW_PLAYING_ENDPOINT, {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
 
+  await redis.set('spotify_now_playing', JSON.stringify(res.data), { ex: 30 }); // Cache for 30 seconds
   return res.data;
 };
 
 const getTopTracks = async (): Promise<TopTracksResponse> => {
-  const access_token = await getAccessToken();
+  const cachedTopTracks = await redis.get<TopTracksResponse>('spotify_top_tracks');
+  if (cachedTopTracks) {
+    return cachedTopTracks;
+  }
 
+  const access_token = await getAccessToken();
   const res = await axios.get<TopTracksResponse>(TOP_TRACKS_ENDPOINT, {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
 
+  await redis.set('spotify_top_tracks', JSON.stringify(res.data), { ex: 3600 }); // Cache for 1 hour
   return res.data;
 };
 
@@ -59,7 +78,7 @@ export async function GET(request: NextRequest) {
         {
           status: 200,
           headers: {
-            'Cache-Control': 'public, s-maxage=180, stale-while-revalidate=90',
+            'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=15',
           },
         }
       );
@@ -79,7 +98,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data, {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=180, stale-while-revalidate=90',
+        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=15',
       },
     });
   } else if (type === 'top-tracks') {
@@ -97,7 +116,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(tracks, {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=180, stale-while-revalidate=90',
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=1800',
       },
     });
   } else {

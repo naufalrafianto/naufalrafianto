@@ -8,6 +8,7 @@ import FilterTag from '../common/FilterButton';
 import Animation from '../animation';
 import { ProjectCard } from '../feature/Card/ProjectCard';
 import { Breadcrumb } from '../common/BreadCrumb';
+import LoadingModal from '../common/LoadingModal';
 
 interface PortfolioListProps {
   initialPosts: Post[];
@@ -93,8 +94,8 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ initialPosts }) => {
         {activeFilter && <FilterTag activeFilter={activeFilter} onRemove={() => handleTagClick(activeFilter)} />}
         <SortDropdown options={['date', 'title']} currentSort={sortBy} onSortChange={handleSortChange} />
       </div>
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <Suspense fallback={<div>Loading projects...</div>}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Suspense fallback={<LoadingModal />}>
           {posts.map((post) => (
             <ProjectCard
               key={post.slug}
