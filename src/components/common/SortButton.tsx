@@ -8,7 +8,7 @@ type SortOption = 'date' | 'title';
 interface SortButtonProps {
   options: SortOption[];
   currentSort: SortOption;
-  onSortChange: (option: SortOption) => void;
+  onSortChange: (_option: SortOption) => void;
 }
 
 const SortButton: React.FC<SortButtonProps> = ({ options, currentSort, onSortChange }) => {

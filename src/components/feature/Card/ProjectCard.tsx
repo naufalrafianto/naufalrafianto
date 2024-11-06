@@ -7,7 +7,7 @@ interface ProjectCardProps {
   tags: readonly string[];
   image?: string;
   slug?: string;
-  onTagClick: (tag: string) => void;
+  onTagClick: (_tag: string) => void;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({

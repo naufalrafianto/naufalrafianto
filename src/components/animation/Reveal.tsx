@@ -19,7 +19,7 @@ export const Reveal = ({ children, width = 'fit-content', className }: RevealPro
       mainControl.start('visible');
       slideControl.start('visible');
     }
-  }, [isInView]);
+  }, [isInView, mainControl, slideControl]);
 
   return (
     <div style={{ position: 'relative', width, overflow: 'hidden' }} className={className}>

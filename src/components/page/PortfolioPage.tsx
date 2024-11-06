@@ -9,7 +9,7 @@ interface PortfolioPageProps {
 }
 
 const PortfolioPageComponent: React.FC<PortfolioPageProps> = ({ initialPosts }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [_, setIsLoading] = useState(false);
 
   useEffect(() => {
     // This effect will run on client-side navigation

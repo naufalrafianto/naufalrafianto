@@ -11,7 +11,7 @@ interface BlogCardProps {
     };
     slug: string;
   };
-  onTagClick: (tag: string) => void;
+  onTagClick: (_tag: string) => void;
   lang: string;
 }
 

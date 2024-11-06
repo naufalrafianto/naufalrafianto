@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 interface PortfolioMetadata {
   title: string;
   desc: string;

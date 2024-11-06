@@ -22,7 +22,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState(initialPosts);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('date');
-  const [isOpen, setIsOpen] = useState(false);
+  const [, setIsOpen] = useState(false);
 
   useEffect(() => {
     const filter = searchParams.get('filter');

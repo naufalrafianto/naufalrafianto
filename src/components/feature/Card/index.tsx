@@ -14,7 +14,7 @@ interface BaseCardProps {
   date: string | Date;
   image?: string;
   tags: readonly string[];
-  onTagClick: (tag: string) => void;
+  onTagClick: (_tag: string) => void;
   href: string;
   cardType: 'portfolio' | 'blog';
 }
