@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to Docker Hub
+name: Build and Deploy
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-push:
+    name: Build and Push to Docker Hub
     runs-on: ubuntu-latest
     steps:
       # Step 1: Checkout code
@@ -40,7 +41,12 @@ jobs:
           docker tag naufalrafianto:latest ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/naufalrafianto:latest
 
-      # Step 7: Deploy to VPS
+  deploy:
+    name: Deploy to VPS
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      # Deploy to VPS
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
