@@ -18,6 +18,7 @@ WORKDIR /app
 
 # Copy dependencies
 COPY --from=deps /app/node_modules ./node_modules
+COPY .env .env
 COPY . .
 
 # Set environment variables for Next.js build
