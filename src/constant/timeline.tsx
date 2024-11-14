@@ -14,7 +14,7 @@ const timelineItems = [
   {
     icon: <LaptopIcon />,
     logo: '/image/logo/gnfi.png',
-    date: '2024-05-01/2023-10-31',
+    date: '2024-05-01/2024-10-31',
     title: 'Frontend Developer',
     company: 'Good News From Indonesia',
     type: 'Internship',
