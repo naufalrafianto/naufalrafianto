@@ -4,7 +4,6 @@ import { BlogPost } from '@/constant/blog';
 import { BlogCard } from '@/components/feature/Card/BlogCard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { Heading } from '../common/Heading';
 import SortDropdown from '../common/SortButton';
 import FilterTag from '../common/FilterButton';
 import Animation from '../animation';
@@ -78,13 +77,13 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
         <Breadcrumb />
       </Animation.FadeUp>
       <div className="mb-12 flex w-full flex-col items-center">
-        <Animation.Reveal>
-          <Heading variant="gradient" className="mb-4 text-center text-3xl font-bold sm:text-4xl">
-            Blog Posts
-          </Heading>
+        <Animation.Reveal className="whitespace-nowrap py-4">
+          <h1 className="text-4xl font-bold text-white sm:text-6xl">
+            My <span className="text-teal-400">Blog Posts</span>
+          </h1>
         </Animation.Reveal>
         <Animation.Reveal>
-          <p className="mx-auto mb-6 max-w-2xl text-center text-gray-400">
+          <p className="mx-auto max-w-2xl text-center text-xl text-gray-400">
             Explore my thoughts and insights on web development, technology, and more.
           </p>
         </Animation.Reveal>

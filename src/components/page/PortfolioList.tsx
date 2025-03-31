@@ -79,14 +79,15 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ initialPosts }) => {
         <Breadcrumb />
       </Animation.FadeUp>
       <div className="mb-12 flex w-full flex-col items-center">
-        <Animation.Reveal>
-          <Heading variant="gradient" className="mb-4 text-center text-3xl font-bold sm:text-4xl">
-            Recent Projects
-          </Heading>
+        <Animation.Reveal className="whitespace-nowrap py-4">
+          <h1 className="text-4xl font-bold text-white sm:text-6xl">
+            Recent <span className="text-teal-400">Projects</span>
+          </h1>
         </Animation.Reveal>
         <Animation.Reveal>
-          <p className="mx-auto mb-6 max-w-2xl text-center text-gray-400">
-            Explore a selection of my recent work, showcasing a range of web development projects and applications.
+          <p className="mx-auto max-w-2xl text-center text-xl text-gray-400">
+            Discover a curated collection of my latest web development endeavors, showcasing my skills and creativity
+            across various projects and applications.
           </p>
         </Animation.Reveal>
       </div>

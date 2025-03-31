@@ -32,7 +32,7 @@ const icons = [
     },
   },
   {
-    href: 'https://www.instagram.com/mrnaufalllll',
+    href: 'https://www.instagram.com/naufallrafianto',
     icon: InstagramLogoIcon,
     ariaLabel: 'Instagram',
     title: 'Visit my Instagram',

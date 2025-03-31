@@ -11,7 +11,7 @@ export default function Template({ children, className }: { children: React.Reac
     animatePageIn();
   }, []);
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto overflow-x-hidden">
       <NextTopLoader
         color="#fff"
         initialPosition={0.08}

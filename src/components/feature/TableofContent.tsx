@@ -40,7 +40,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
   };
 
   return (
-    <nav className="sticky top-4 space-y-2 p-4">
+    <nav className="sticky top-4 space-y-2 p-4 rounded-md border border-teal-400/10 shadow-lg">
       {headings.map((heading) => (
         <motion.div
           key={heading.id}
@@ -51,9 +51,8 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
         >
           <button
             onClick={() => handleScroll(heading.id)}
-            className={`text-left text-sm transition-all duration-200 ${
-              activeId === heading.id ? 'font-medium text-teal-400' : 'text-gray-400 hover:text-teal-300'
-            }`}
+            className={`text-left text-sm transition-all duration-200 ${activeId === heading.id ? 'font-medium text-teal-400' : 'text-gray-400 hover:text-teal-300'
+              }`}
           >
             {heading.text}
           </button>

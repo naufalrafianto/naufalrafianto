@@ -9,5 +9,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const posts = await getBlogPosts();
 
+
+
   return <PortfolioPageComponent initialPosts={posts} />;
 }

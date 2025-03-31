@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -28,11 +28,20 @@ import {
   FaUserFriends,
 } from 'react-icons/fa';
 
-function getPortfolioDirectories(dir: string): string[] {
-  return fs
-    .readdirSync(dir, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+// Mark the file as server-side only
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
+async function getPortfolioDirectories(dir: string): Promise<string[]> {
+  try {
+    const files = await fs.readdir(dir, { withFileTypes: true });
+    return files
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  } catch (error) {
+    console.error('Error reading portfolio directories:', error);
+    return [];
+  }
 }
 
 function extractHeadings(content: string): HeadingInfo[] {
@@ -44,7 +53,7 @@ function extractHeadings(content: string): HeadingInfo[] {
     headings.push({
       level: parseInt(match[1]),
       id: match[2],
-      text: match[3].replace(/<[^>]+>/g, ''), // Remove any nested HTML tags
+      text: match[3].replace(/<[^>]+>/g, ''),
     });
   }
 
@@ -52,97 +61,105 @@ function extractHeadings(content: string): HeadingInfo[] {
 }
 
 async function getPostData(slug: string): Promise<Post | null> {
-  const filePath = path.join(process.cwd(), 'src', 'content', 'portfolio', slug, 'page.mdx');
-  if (!fs.existsSync(filePath)) {
+  try {
+    const filePath = path.join(process.cwd(), 'src', 'content', 'portfolio', slug, 'page.mdx');
+    const source = await fs.readFile(filePath, 'utf-8');
+    const { content, data } = matter(source);
+    const metadata = data as PortfolioMetadata;
+    const headings = extractHeadings(content);
+
+    const mdxContent = await MDXRemote({
+      source: content,
+      options: {
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            [
+              rehypePrettyCode,
+              {
+                theme: {
+                  light: 'github-light',
+                  dark: 'github-dark',
+                },
+                keepBackground: false,
+              },
+            ],
+          ],
+        },
+      },
+      components: {
+        Callout,
+        FadeUp,
+        CloudImg,
+        Reveal,
+        TechIcon,
+        Subtitle,
+        TechStackShowcase,
+        ProjectObjectives,
+        Challenges,
+        Gallery,
+        CTAButton,
+        FaCameraRetro,
+        FaMountain,
+        FaLightbulb,
+        FaCode,
+        FaUserFriends,
+        FaShoppingCart,
+        FaUserCheck,
+        FaClipboardList,
+      },
+    });
+
+    return {
+      content: mdxContent,
+      metadata,
+      slug,
+      headings,
+      previousPost: null,
+      nextPost: null,
+    };
+  } catch (error) {
+    console.error(`Error getting post data for slug ${slug}:`, error);
     return null;
   }
-
-  const source = fs.readFileSync(filePath, 'utf-8');
-  const { content, data } = matter(source);
-  const metadata = data as PortfolioMetadata;
-  const headings = extractHeadings(content);
-
-  const mdxContent = await MDXRemote({
-    source: content,
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [
-          [
-            rehypePrettyCode,
-            {
-              theme: {
-                light: 'github-light',
-                dark: 'github-dark',
-              },
-              keepBackground: false,
-            },
-          ],
-        ],
-      },
-    },
-    components: {
-      Callout,
-      FadeUp,
-      CloudImg,
-      Reveal,
-      TechIcon,
-      Subtitle,
-      TechStackShowcase,
-      ProjectObjectives,
-      Challenges,
-      Gallery,
-      CTAButton,
-      FaCameraRetro,
-      FaMountain,
-      FaLightbulb,
-      FaCode,
-      FaUserFriends,
-      FaShoppingCart,
-      FaUserCheck,
-      FaClipboardList,
-    },
-  });
-
-  return {
-    content: mdxContent,
-    metadata,
-    slug,
-    headings,
-    previousPost: null,
-    nextPost: null,
-  };
 }
 
 export async function getAllPosts(): Promise<Post[]> {
-  const portfolioDir = path.join(process.cwd(), 'src', 'content', 'portfolio');
-  const portfolioDirs = getPortfolioDirectories(portfolioDir);
-  const posts = await Promise.all(
-    portfolioDirs.map(async (dir) => {
-      const slug = dir;
-      return getPostData(slug);
-    })
-  );
-  return posts.filter((post): post is NonNullable<typeof post> => post !== null);
+  try {
+    const portfolioDir = path.join(process.cwd(), 'src', 'content', 'portfolio');
+    const portfolioDirs = await getPortfolioDirectories(portfolioDir);
+    const posts = await Promise.all(
+      portfolioDirs.map((dir) => getPostData(dir))
+    );
+    return posts.filter((post): post is NonNullable<typeof post> => post !== null);
+  } catch (error) {
+    console.error('Error getting all posts:', error);
+    return [];
+  }
 }
 
 export async function getPost(slug: string): Promise<Post | null> {
-  const allPosts = await getAllPosts();
-  const postIndex = allPosts.findIndex((post) => post.slug === slug);
+  try {
+    const allPosts = await getAllPosts();
+    const postIndex = allPosts.findIndex((post) => post.slug === slug);
 
-  if (postIndex === -1) {
+    if (postIndex === -1) {
+      return null;
+    }
+
+    const currentPost = allPosts[postIndex];
+    const previousPost = postIndex > 0 ? allPosts[postIndex - 1] : null;
+    const nextPost = postIndex < allPosts.length - 1 ? allPosts[postIndex + 1] : null;
+
+    return {
+      ...currentPost,
+      previousPost: previousPost ? { title: previousPost.metadata.title, slug: previousPost.slug } : null,
+      nextPost: nextPost ? { title: nextPost.metadata.title, slug: nextPost.slug } : null,
+    };
+  } catch (error) {
+    console.error(`Error getting post for slug ${slug}:`, error);
     return null;
   }
-
-  const currentPost = allPosts[postIndex];
-  const previousPost = postIndex > 0 ? allPosts[postIndex - 1] : null;
-  const nextPost = postIndex < allPosts.length - 1 ? allPosts[postIndex + 1] : null;
-
-  return {
-    ...currentPost,
-    previousPost: previousPost ? { title: previousPost.metadata.title, slug: previousPost.slug } : null,
-    nextPost: nextPost ? { title: nextPost.metadata.title, slug: nextPost.slug } : null,
-  };
 }
 
 export async function getBlogPosts(): Promise<Post[]> {
