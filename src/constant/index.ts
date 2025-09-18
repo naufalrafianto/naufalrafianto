@@ -21,7 +21,7 @@ const icons = [
     title: 'LinkedIn',
   },
   {
-    href: '#',
+    href: 'mailto:developer.naufal@gmail.com',
     icon: EnvelopeOpenIcon,
     ariaLabel: 'Email',
     title: 'Email',

@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import { IconGroup } from '../feature/IconGroup';
 import { icons } from '@/constant';
-import Link from 'next/link';
 import { CustomLink } from '../common/CustomLink';
 
 export const Footer = () => {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="relative w-full overflow-y-hidden border-t border-gray-200/10 px-10 pb-10 pt-80 sm:px-40 sm:pt-0" id="contact">
       <div className="absolute bottom-0 left-0 h-80 w-full">
@@ -52,7 +53,7 @@ export const Footer = () => {
         <div className="z-10 my-6 h-px w-full bg-gray-200" />
 
         <p className="z-10 text-sm font-light md:text-base md:font-normal">
-          Copyright © 2024 Muhammad Naufal Rafianto
+          Copyright © {year} Muhammad Naufal Rafianto
         </p>
       </div>
     </footer>

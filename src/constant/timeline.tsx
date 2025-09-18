@@ -4,12 +4,15 @@ import { GrTest } from 'react-icons/gr';
 const timelineItems = [
   {
     icon: <PersonIcon />,
-    date: '2023-07-01/present',
-    title: 'Fullstack Developer',
-    type: 'Freelance',
-    location: 'Surabaya, Indonesia - Remote',
+    logo: '/image/logo/logosynergy.png',
+    date: '2025-07-28/present',
+    company: 'RSUD Syarifah Ambami Rato Ebu',
+    title: 'Frontend Developer',
+    type: 'Contract',
+    location: 'Bangkalan, Indonesia - Remote',
+    website: 'https://rsud.bangkalankab.go.id/syam_profile/',
     description:
-      'As a Fullstack Developer, I specialize in designing and developing scalable web applications. My responsibilities include building and maintaining both the frontend and backend of projects using modern frameworks such as Next.js, implementing responsive UI/UX designs, optimizing performance, and ensuring seamless functionality across all devices. Additionally, I manage testing, debugging, and deployment, along with maintaining comprehensive documentation.',
+      'Designed and developed a replica of a Hospital Information System (SIM RS), implementing core modules such as patient management, medical records, appointment scheduling, and billing. The project emphasized data integrity and role-based authentication for doctors, nurses, and admins, while strengthening my ability to deliver clean, maintainable code under tight timelines.',
   },
   {
     icon: <LaptopIcon />,

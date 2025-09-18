@@ -10,6 +10,7 @@ export const useNowPlaying = () => {
     dedupingInterval: 30000,
   });
 
+
   return {
     nowPlaying: data,
     isLoading: !error && !data,
@@ -18,21 +19,3 @@ export const useNowPlaying = () => {
   };
 };
 
-// export const useTopTracks = () => {
-//   const { data, error, mutate } = useSWR<TrackData[]>(
-//     '/api/spotify?type=top-tracks',
-//     fetcher,
-//     {
-//       refreshInterval: 3600000, // Refresh every hour
-//       revalidateOnFocus: false,
-//       dedupingInterval: 3600000,
-//     }
-//   );
-
-//   return {
-//     topTracks: data,
-//     isLoading: !error && !data,
-//     isError: error,
-//     mutate,
-//   };
-// };

@@ -72,7 +72,7 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
   };
 
   return (
-    <main className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
       <Animation.FadeUp className="mb-8 inline-flex items-center">
         <Breadcrumb />
       </Animation.FadeUp>
@@ -102,6 +102,6 @@ export function BlogPostList({ initialPosts, lang = 'en' }: BlogPostListProps) {
       {posts.length === 0 && (
         <p className="mt-8 text-center text-gray-400">No blog posts found with the selected tag.</p>
       )}
-    </main>
+    </div>
   );
 }

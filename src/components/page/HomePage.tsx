@@ -39,8 +39,7 @@ export const HomePage = () => {
         }}
         className="mx-auto mt-4 flex flex-col sm:flex-row items-center gap-4 justify-center"
       >
-        {/* Currently Unemployed Badge */}
-        <div className="flex items-center gap-2 rounded-full border border-green-500/20 bg-gradient-to-r from-green-500/[0.08] to-green-500/[0.16] px-4 py-2 backdrop-blur-md">
+        {/* <div className="flex items-center gap-2 rounded-full border border-green-500/20 bg-gradient-to-r from-green-500/[0.08] to-green-500/[0.16] px-4 py-2 backdrop-blur-md">
           <span className="relative flex h-2.5 w-2.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50"></span>
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
@@ -48,7 +47,7 @@ export const HomePage = () => {
           <span className="bg-gradient-to-r from-green-300 to-green-500 bg-clip-text text-sm font-semibold tracking-wide text-transparent">
             Currently unemployed
           </span>
-        </div>
+        </div> */}
 
         <NowPlayingComponent data={nowPlaying} />
       </motion.div>

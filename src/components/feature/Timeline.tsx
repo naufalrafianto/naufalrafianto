@@ -2,67 +2,74 @@ import React from 'react';
 import { useTimelineItems } from '@/hooks/useTimelineItems';
 import { Reveal } from '../animation/Reveal';
 import { CustomLink } from '../common/CustomLink';
-import { formatTimeDifference } from '@/lib/date';
-import { cn } from '@/lib/cn';
 import Image from 'next/image';
 
 const Timeline: React.FC = () => {
   const timelineItems = useTimelineItems();
 
   return (
-    <div className="relative">
-      <ul className="ml-6 space-y-10 border-l border-gray-700">
+    <div className="relative max-w-4xl mx-auto">
+      <ul className="relative space-y-12">
+        {/* Vertical line */}
+        <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-gray-600 via-gray-700 to-transparent"></div>
+
         {timelineItems.map((item, index) => {
           const [startDateStr, endDateStr] = item.date.split('/');
           const startDate = new Date(startDateStr);
           const endDate = endDateStr === 'present' ? new Date() : new Date(endDateStr);
-          const dateDifference = formatTimeDifference(startDate, endDate);
-
-          const formattedEndDate =
-            endDateStr === 'present'
-              ? 'Present'
-              : endDate.toLocaleDateString('en-US', {
-                  month: 'long',
-                  year: 'numeric',
-                });
 
           return (
-            <li key={index} className="relative pl-10">
-              <div className="absolute left-[-20px] top-0 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-700 bg-gray-800">
+            <li key={index} className="relative flex items-start group">
+              {/* Timeline dot */}
+              <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-full border-2 border-gray-600 bg-gray-900 flex items-center justify-center group-hover:border-gray-500 transition-colors duration-200">
                 {item.logo ? (
                   <Image
-                    height={100}
-                    width={100}
-                    className="h-10 w-10 rounded-full object-cover"
+                    height={32}
+                    width={32}
+                    className="w-8 h-8 rounded-full object-cover"
                     src={item.logo}
                     alt={item.company}
                   />
                 ) : (
-                  <span className="text-white">{item.icon}</span>
+                  <span className="text-gray-300 text-lg">{item.icon}</span>
                 )}
               </div>
 
-              <div className="pt-1.5">
+              {/* Content */}
+              <div className="pb-8 px-4">
                 <Reveal>
-                  <h3 className="text-lg font-bold text-white">{item.title}</h3>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-x-2">
+                    <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+                    <time className="text-sm text-gray-500 font-medium">
+                      {`${startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - ${endDateStr === 'present' ? 'Present' : endDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                        }`}
+                    </time>
+                  </div>
                 </Reveal>
+
                 <Reveal>
-                  <CustomLink href={item.website} target="_blank" className="text-base">
-                    {item.company}
-                  </CustomLink>
-                  <span className={cn(item.company && 'ml-2', 'text-base font-normal text-gray-400')}>{item.type}</span>
+                  <div className="flex items-center mb-2">
+                    <CustomLink
+                      href={item.website}
+                      target="_blank"
+                      className="text-gray-300 hover:text-white font-medium transition-colors"
+                    >
+                      {item.company}
+                    </CustomLink>
+                    {item.company && item.type && (
+                      <span className="text-gray-600">·</span>
+                    )}
+                  </div>
                 </Reveal>
+
+                {item.location && (
+                  <Reveal>
+                    <p className="text-gray-500 text-sm mb-4">{item.location}</p>
+                  </Reveal>
+                )}
+
                 <Reveal>
-                  <time className="my-1 block text-sm font-normal leading-none text-gray-500">
-                    {`${startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - ${formattedEndDate}`}
-                    <span className="ml-2">{`· ${dateDifference}`}</span>
-                  </time>
-                </Reveal>
-                <Reveal>
-                  <p className="mt-1 text-base font-normal text-gray-400">{item.location}</p>
-                </Reveal>
-                <Reveal>
-                  <p className="mt-2 text-base font-normal text-gray-400">{item.description}</p>
+                  <p className="text-gray-400 leading-relaxed">{item.description}</p>
                 </Reveal>
               </div>
             </li>
