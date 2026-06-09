@@ -18,7 +18,11 @@ export const metadata: Metadata = {
 
 
 const NAV_LINKS = [
-  { label: "Curriculum Vitae", href: "/cv.pdf", external: true },
+  {
+    label: "Curriculum Vitae",
+    href: "https://drive.google.com/drive/folders/1Fx1G67HoCZwUaQmYtjFeUK-bIkcKMWxj?usp=sharing",
+    external: true,
+  },
   { label: "LinkedIn", href: "https://linkedin.com/in/naufal-rafianto-4159a8206", external: true },
   { label: "GitHub", href: "https://github.com/naufalrafianto", external: true },
 ];
@@ -26,13 +30,15 @@ const NAV_LINKS = [
 export default function Home() {
   return (
     <main className="w-full min-h-screen bg-linear-to-tl from-black via-zinc-900 to-black overflow-x-hidden selection:bg-zinc-800 selection:text-white">
-      <section className="relative flex flex-col items-center justify-center w-full h-screen px-4 overflow-hidden">
-        <div className="hidden md:block w-screen h-px animate-fade-left bg-linear-to-r from-zinc-500/0 via-zinc-400/40 to-zinc-500/0 mb-8" />
-        <h1 className="py-5 px-2 text-5xl sm:text-7xl md:text-9xl text-transparent bg-white bg-clip-text font-display whitespace-nowrap cursor-default animate-title text-edge-outline ">
-          Muhammad Naufal Rafianto
+      <section className="relative flex min-h-screen flex-col items-center justify-center w-full px-6 overflow-hidden gap-6 sm:gap-8">
+        <div className="hidden md:block w-screen h-px animate-fade-left bg-linear-to-r from-zinc-500/0 via-zinc-400/40 to-zinc-500/0" />
+        <h1 className="text-center text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-white bg-clip-text font-display cursor-default animate-title text-edge-outline tracking-tighter leading-tight px-2">
+          Muhammad
+          <br />
+          Naufal Rafianto
         </h1>
-        <div className="hidden md:block w-screen h-px animate-fade-right bg-linear-to-r from-zinc-500/0 via-zinc-400/40 to-zinc-500/0 mt-8" />
-        <nav className="flex items-center gap-6  animate-fade-in px-7 py-3 rounded-full border border-white/5 bg-zinc-900/60 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="hidden md:block w-screen h-px animate-fade-right bg-linear-to-r from-zinc-500/0 via-zinc-400/40 to-zinc-500/0" />
+        <nav className="animate-fade-in flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 px-6 py-3 rounded-2xl sm:rounded-full border border-white/5 bg-zinc-900/60 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.06)] w-full max-w-xs sm:max-w-fit">
           {NAV_LINKS.map((link, i) => (
             <React.Fragment key={link.href}>
               <Link
@@ -43,11 +49,12 @@ export default function Home() {
                 {link.label}
               </Link>
               {i < NAV_LINKS.length - 1 && (
-                <span className="text-zinc-700 font-light select-none" aria-hidden="true">/</span>
+                <span className="hidden sm:inline text-zinc-700 select-none" aria-hidden="true">/</span>
               )}
             </React.Fragment>
           ))}
         </nav>
+
         <ShootingStars className="pointer-events-none" />
         <StarsBackground />
       </section>
