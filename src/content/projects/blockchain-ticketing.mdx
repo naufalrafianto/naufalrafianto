@@ -1,0 +1,89 @@
+---
+title: "Concert Ticket Marketplace — Blockchain / NFT"
+description: "Decentralized concert ticket platform built on Polygon zkEVM Layer-2, using smart contracts and ERC-721 NFT tickets."
+date: "2025-07-01"
+category: "Web3 / Blockchain"
+tags:
+  ["Solidity", "Next.js", "Polygon zkEVM", "NFT", "Smart Contract", "Hardhat"]
+---
+
+# Concert Ticket Marketplace on Ethereum Layer-2
+
+A fully decentralized ticket marketplace where concert organizers mint NFT tickets on **Polygon zkEVM** — no middlemen, no fakes, no scalping.
+
+## Stack
+
+Solidity · Next.js · Hardhat · ethers.js · Polygon zkEVM · IPFS · MetaMask · ERC-721
+
+---
+
+## What It Does
+
+Three core smart contract functions drive the whole lifecycle:
+
+- **`createEvent`** — organizer submits event details (name, date, capacity, price); contract stores it immutably and returns a unique event ID
+- **`purchaseTicket`** — buyer sends ETH, contract atomically mints an ERC-721 NFT to their wallet; metadata stored on IPFS
+- **`useTicket`** — event staff enters the Token ID; contract verifies ownership, marks ticket as used, then burns the NFT to prevent reuse
+
+Everything is on-chain. No backend, no trusted third party.
+
+---
+
+## Why Polygon zkEVM
+
+Ethereum mainnet is too expensive for high-volume ticket sales. Polygon zkEVM solves this with **ZK Rollups** — transactions execute off-chain, a single ZK-SNARK proof is submitted to Ethereum L1 for verification. The result: same security guarantees, drastically lower cost.
+
+Tested across three testnets to find the right tradeoff:
+
+| Network                   | Gas Price  | Deploy Cost   | Deploy Time |
+| ------------------------- | ---------- | ------------- | ----------- |
+| **Polygon zkEVM Cardona** | 0.01 Gwei  | 0.0000525 ETH | 13.2s       |
+| Polygon PoS Amoy          | 37.57 Gwei | 0.1974 POL    | 5.8s        |
+| Ethereum Sepolia          | 21.77 Gwei | 0.0001144 ETH | 8.7s        |
+
+**Cardona wins on cost** (~375× cheaper than Sepolia per operation). Amoy wins on speed. For a marketplace that needs to scale, cost efficiency matters more.
+![Arch overview](/image/projects/blockchain/arsitektur.png)
+
+---
+
+## Performance Testing
+
+Ran four load test scenarios on Cardona. Key findings:
+
+**Ramp-Up Purchase Test** (2→10 concurrent transactions)
+
+- 100% success rate across all 150 transactions
+- TPS scaled linearly from 0.99 → 4.65 as concurrency increased
+- Average response time stayed under 50ms even at peak load
+- Peak burst TPS: **285.7**
+
+**Sustained Load Test** (8 concurrent, 80 transactions, 20s)
+
+- Still 100% success rate
+- The network got _faster_ over time — TPS improved from 175 → 292 as it warmed up
+- Final batch: 25ms duration, 23ms response time
+- **66.8% TPS improvement** from first batch to last
+
+The warm-up effect was consistent across all tests: first-batch gas usage runs ~20% higher (cold start overhead), then stabilizes at ~332,619 gas for subsequent purchases.
+
+---
+
+## What I Learned
+
+- ZK-SNARK verification adds compute overhead that explains Cardona's slower confirmation time — it's the price of cryptographic security without a trusted party
+- The first NFT mint always costs more gas than subsequent ones; state initialization is expensive, subsequent operations reuse cached state
+- Polygon zkEVM's self-optimizing behavior under sustained load was surprising — it wasn't designed behavior I explicitly coded, it's the network adapting
+- Building on L2 forces you to think about finality differently: zkEVM gives instant finality once the proof is verified, vs. optimistic rollups that need a challenge window
+- IPFS for metadata + on-chain ownership is the right split — heavy data off-chain, proof of ownership immutably on-chain
+
+---
+
+## Results
+
+- ✅ Full ticket lifecycle working end-to-end on Polygon zkEVM Cardona testnet
+- ✅ 100% transaction success rate under all load scenarios
+- ✅ Ticket purchase cost: **0.00000393 ETH** (~$0.01) vs. comparable L1 costs orders of magnitude higher
+- ✅ Peak throughput: **320 TPS** under sustained load
+- ✅ Zero double-spend — burn mechanism prevents any ticket from being used twice
+
+![UI overview](/image/projects/blockchain/konser-marketplace.png)

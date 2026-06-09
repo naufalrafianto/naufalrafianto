@@ -1,0 +1,49 @@
+---
+title: "ERM — Hospital Medical Record System"
+date: "2026-06"
+tags: ["React", "TypeScript", "Healthcare", "Web App"]
+summary: "A web application that helps hospital staff manage patient records digitally — from check-in to discharge."
+---
+
+# ERM — Hospital Medical Record System
+
+A web app built for a hospital to replace paper-based patient records with a fast, organized digital system.
+
+Doctors, nurses, and staff use it daily to handle patients across three departments: **outpatient clinics**, **emergency**, and **inpatient wards**.
+
+---
+
+## What It Does
+
+When a patient arrives, staff can look them up and access everything in one place:
+
+- **Patient summary** — demographics, insurance, allergies, and visit history
+- **Clinical notes** — doctors write assessments and progress notes
+- **Diagnosis** — ICD-coded diagnoses recorded per visit
+- **Orders** — prescriptions, lab tests, radiology, and surgery requests
+- **Medical record forms** — digital versions of standard hospital forms (consent, discharge summary, etc.)
+- **Discharge planning** — documenting how and when a patient leaves
+
+The interface adapts based on the department and the user's role — a nurse sees different tabs than a doctor, and the emergency department has different forms than the outpatient clinic.
+
+---
+
+## My Role
+
+I built the entire frontend from scratch — UI, data fetching, form logic, state management, and deployment pipeline.
+
+---
+
+## Stack
+
+React · TypeScript · Tailwind CSS · deployed via Docker on a self-hosted server with automated CI/CD.
+
+---
+
+## Challenges
+
+**Medical forms are complex.** A single form can have 30+ fields with conditional logic — show this section only if the patient has diabetes, disable this field based on a prior answer. Getting that right without turning the code into spaghetti required careful structure.
+
+**Many users, many workflows.** The same app is used by doctors, paramedics, nurses, and admin staff. Each role sees a different set of features. Building that flexibility without duplicating code took deliberate design.
+
+**Real-time feel on clinical data.** Patient data changes constantly. I used TanStack Query to keep the UI in sync with the server without full page reloads, so staff always see the latest information.

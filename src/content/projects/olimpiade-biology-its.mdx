@@ -1,0 +1,90 @@
+---
+title: "OBI ITS  — Full-Stack Competition Platform"
+description: "A full-stack platform built solo for Olympiade of Biology ITS , handling registration, authentication, and admin management for hundreds of participants."
+date: "2024-10-10"
+category: "Full-Stack Web"
+tags:
+  ["Next.js", "TypeScript", "Express.js", "MongoDB", "Prisma", "TailwindCSS"]
+demo: "https://obi2024.vercel.app/"
+---
+
+# OBI ITS — Full-Stack Competition Platform
+
+A production-grade competition platform built entirely solo for the **Olympiade of Biology ITS ** — handling participant registration, secure authentication, and real-time admin management from a single codebase.
+
+## Stack
+
+Next.js · TypeScript · Express.js · Prisma · MongoDB · TailwindCSS · Vercel
+
+---
+
+## What It Does
+
+Three core systems make the whole platform run:
+
+- **Registration flow** — participants fill a multi-step form; data is validated server-side, stored in MongoDB, and confirmation is sent automatically
+- **Auth & session management** — JWT-based authentication with protected routes on both the Next.js frontend and Express.js API; role-based access separates participants from admins
+- **Admin panel** — committee members can view, filter, and export all registration data; status updates propagate instantly without a page refresh
+
+No third-party registration tools. No spreadsheet chaos. Everything in one place.
+
+---
+
+## Development Timeline
+
+Built across roughly 6 weeks as a solo developer, handling design, frontend, backend, and deployment in parallel.
+
+| Phase                      | Scope                                                  | Duration |
+| -------------------------- | ------------------------------------------------------ | -------- |
+| **Design & Planning**      | Wireframes, DB schema, API contract                    | Week 1   |
+| **Frontend**               | Landing page, registration form, participant dashboard | Week 2–3 |
+| **Backend**                | Auth, registration API, admin endpoints                | Week 3–4 |
+| **Integration & Testing**  | End-to-end flows, edge case handling                   | Week 5   |
+| **Deployment & Hardening** | Vercel deploy, env config, load testing                | Week 6   |
+
+The biggest time sink was authentication — getting JWT refresh tokens, protected route middleware, and session persistence right across both Next.js and Express took longer than expected.
+
+---
+
+## Key Technical Decisions
+
+**Prisma over raw MongoDB driver** — Prisma's type-safe query builder eliminated an entire class of runtime errors. Autocomplete on database queries in TypeScript is genuinely a productivity multiplier when working alone.
+
+**Server-side rendering for the landing page** — Next.js SSR meant the public-facing pages were fully indexed by search engines and loaded fast on first visit, without any client-side data fetching delays.
+
+**Role-based middleware on the API** — rather than checking roles in every route handler, a single `requireRole('admin')` middleware wraps all admin routes. Clean, auditable, easy to extend.
+
+**TailwindCSS for speed** — no time to maintain a separate design system solo. Tailwind's utility classes let UI decisions happen inline without context-switching to CSS files.
+
+---
+
+## Challenges
+
+**Designing the full system architecture alone.** Usually there's a senior to sanity-check decisions. Here, every call — database schema, API structure, auth strategy — was mine. Getting it wrong early would cascade.
+
+**Securing authentication without a library like NextAuth.** Rolling a custom JWT implementation forced a deep understanding of token expiry, refresh flows, and CSRF risks that would have been abstracted away otherwise.
+
+**Meeting a hard deadline with a shifting spec.** Registration requirements changed twice. The flexible MongoDB schema absorbed the data-layer changes; the real challenge was keeping the frontend form and backend validation in sync each time.
+
+**Testing alone.** No QA, no second pair of eyes. Built a manual test checklist and ran through it after every major change — tedious, but it caught real bugs before the platform went live.
+
+---
+
+## What I Learned
+
+- Building full-stack solo forces a systems-level view that feature work on a team rarely requires — you feel every dependency between layers
+- TypeScript across the entire stack (frontend + backend) is worth the setup cost; the compiler catches integration bugs that would otherwise only appear at runtime
+- Database schema design deserves more upfront time than UI — changing a form is easy, migrating production data is not
+- Deployment is not the finish line; monitoring, error logging, and having a rollback plan matter more once real users are hitting the system
+
+---
+
+## Results
+
+- ✅ Platform live and handling real participant registrations for OBI ITS
+- ✅ 500+ participants registered through the platform without data loss or downtime
+- ✅ Zero authentication vulnerabilities reported during the competition period
+- ✅ Admin panel reduced committee workload from manual spreadsheet tracking to a single dashboard
+- ✅ First solo full-stack production deployment — frontend, backend, database, and infrastructure all self-managed
+
+![OBI ITS Landing Page](/image/projects/obi/gfyhhawprdmqcdewju3g.png)

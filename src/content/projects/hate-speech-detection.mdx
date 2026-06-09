@@ -1,0 +1,55 @@
+---
+title: "Hate Speech & Offensive Language Detection"
+description: "ML pipeline for automated tweet classification using TF-IDF, SMOTE, and ensemble models."
+date: "2024-06-01"
+category: "AI / ML"
+tags: ["Python", "Scikit-learn", "SVM", "Neural Network"]
+---
+
+# Hate Speech & Offensive Language Detection
+
+Automated system to classify tweets into hate speech, offensive language, or neutral — trained on **24,783 tweets** with a Neural Network accuracy of **95.89%**.
+
+## Stack
+
+Python · Scikit-learn · SMOTE · TF-IDF · SVM · Random Forest · Neural Network
+
+---
+
+## My Role
+
+Final project for Machine Learning course at ITS Surabaya, built with a team of 6. My contributions:
+
+- **Data Preprocessing Pipeline** — end-to-end text cleaning, stopword removal, and normalization
+- **Feature Engineering** — TF-IDF vectorization with `max_features=5000`
+- **Model Benchmarking** — evaluated SVM, Random Forest, Naive Bayes, Logistic Regression, and Neural Network
+- **Hyperparameter Tuning** — Grid Search over 24 combinations with 5-fold cross-validation
+
+![Data pipeline overview](/image/projects/hate-speech/pipeline.png)
+
+---
+
+## What I Learned
+
+- How to handle severe class imbalance using SMOTE combined with undersampling — not just oversampling blindly
+- Why traditional embeddings (TF-IDF, BoW) can outperform Word2Vec on small, domain-specific datasets
+- The tradeoff between model complexity and consistency: Neural Network had the highest accuracy, but Random Forest had the lowest variance (CV Std 0.0012)
+- Hate speech vs. offensive language is genuinely hard to separate — the confusion matrix confirmed the model struggled most at that boundary
+
+---
+
+## Results
+
+![Model performance comparison](/image/projects/hate-speech/accuracy.png)
+
+| Model               | Accuracy   | CV Mean | CV Std |
+| ------------------- | ---------- | ------- | ------ |
+| **Neural Network**  | **95.89%** | 96%     | 0.0015 |
+| Random Forest       | 95.36%     | 96%     | 0.0012 |
+| SVM                 | 92.99%     | 93%     | 0.0022 |
+| Logistic Regression | 91.47%     | 91%     | 0.0024 |
+| Naive Bayes         | 86.13%     | 86%     | 0.0026 |
+
+**Neural Network** achieved the highest accuracy at 95.89%, making it the best-performing model overall. **Random Forest** came in a close second — and actually had the lowest CV standard deviation (0.0012), meaning it was the most _consistent_ model across folds. SVM was a solid middle-ground, reliable but outclassed by the ensemble approach. Logistic Regression and Naive Bayes lagged behind; Naive Bayes in particular struggled with its feature-independence assumption, which rarely holds for natural language.
+
+The hardest boundary to learn was hate speech (class 0) vs. offensive language (class 1) — the confusion matrix showed these two classes cross-contaminating the most, which reflects how genuinely ambiguous the distinction is even for humans.
