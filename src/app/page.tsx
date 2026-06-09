@@ -32,7 +32,7 @@ export default function Home() {
     <main className="w-full min-h-screen bg-linear-to-tl from-black via-zinc-900 to-black overflow-x-hidden selection:bg-zinc-800 selection:text-white">
       <section className="relative flex min-h-screen flex-col items-center justify-center w-full px-6 overflow-hidden gap-6 sm:gap-8">
         <div className="hidden md:block w-screen h-px animate-fade-left bg-linear-to-r from-zinc-500/0 via-zinc-400/40 to-zinc-500/0" />
-        <h1 className="text-center text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-white bg-clip-text font-display cursor-default animate-title text-edge-outline tracking-tighter leading-tight px-2">
+        <h1 className="text-center text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-white bg-clip-text font-display cursor-default animate-title text-edge-outline px-2">
           Muhammad
           <br />
           Naufal Rafianto
