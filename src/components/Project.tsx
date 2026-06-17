@@ -6,7 +6,7 @@ const projects = [
         slug: "emr-hms",
         title: "EMR & HMS",
         description:
-            "Migrated paper-based hospital workflows into a fully digital integrated platform, reducing patient registration time by 40% and cutting UX-related staff complaints by 60%.",
+            "Modernized hospital workflows into a fully digital integrated platform, reducing patient registration time by 40% and cutting UX-related staff complaints by 60%.",
         date: "2025-07-01",
         tags: ["React.js", "Next.js", "Healthcare"],
         category: "Frontend",
